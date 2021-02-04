@@ -2,9 +2,12 @@
 # curl -X POST http://localhost:8000/Pieces/\?Nom\=Bureau\&X\=1\&Y\=1\&Z\=1
 
 import http.server, urllib.parse, sqlite3, threading
-
+import paho.mqtt.client as mqtt
 import socketserver,_thread
 
+MQTT_ADDRESS = '192.168.46.198'
+MQTT_USER = 'mickael'
+MQTT_PASSWORD = 'mickael'
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 	def __init__(self, *args, **kwargs):
@@ -126,11 +129,20 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 		if self.path == '/CafeInstantane':
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
-			print(res)
+			#print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
-			print(query)
-			# path = "/Factures"
-			# rep = self.mysql.insert(path,query)
+			#print(query)
+			val ='1'
+			for v in query.values() :
+				if v[0] == "Grand" :
+					val += '2'
+				elif v[0] == "Petit" :
+					val += "1"
+				else :
+					val += v[0]
+			print(val)
+			mqtt_client.publish("home/kfee",val)
+
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -206,9 +218,9 @@ if __name__ == '__main__':
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
-	# Multiple connections
-	# threading.Thread(target=serve_on_port, args=[7777]).start()
-	# threading.Thread(target=serve_on_port, args=[8888]).start()
+	mqtt_client = mqtt.Client()
+	mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+	mqtt_client.connect(MQTT_ADDRESS, 1883)
 
 	try:
 	# Mono connection : méthode of the server object to process one or many requests
