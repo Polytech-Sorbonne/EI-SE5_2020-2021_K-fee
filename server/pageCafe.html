@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="script.js"></script>
+
 </head>
 
 <!-- Header -->
@@ -25,7 +29,7 @@
 <div class="w3-container w3-padding-32" id="add">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
     <a href="#NouveauCafe" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouveau </b>Café</a>
-    <a href="#Recette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
+    <a id="CafeRecette" href="#CafeInstantRecette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
   </div>
 
 <!-- Nouvelle café -->
@@ -34,7 +38,7 @@
     <p>Dans cette section vous pouvez selectionner les paramètres de votre café pour le boire immédiatement. </p>
 
     <form action="CafeInstantane" method="post">
-      <label for="cars"> Nombre de dose de café:</label>
+      <label for="cafe"> Nombre de dose de café:</label>
       <select name="cafe" id="nb_dose_cafe">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -43,7 +47,7 @@
       </select>
       <br><br>
 
-      <label for="cars"> Nombre de dose de sucre:</label>
+      <label for="cafe"> Nombre de dose de sucre:</label>
       <select name="cafesucre" id="nb_dose_sucre">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -52,14 +56,14 @@
       </select>
       <br><br>
 
-      <label for="cars"> Taille de votre café:</label>
+      <label for="cafe"> Taille de votre café:</label>
       <select name="cafeTaille" id="taille">
         <option value="Grand">Grand</option>
         <option value="Petit">Petit</option>
       </select>
       <br><br>
 
-      <label for="cars"> Température de votre café:</label>
+      <label for="cafe"> Température de votre café:</label>
       <select name="cafeTemperature" id="temperature">
         <option value="Tres chaud">Très chaud</option>
         <option value="Chaud">Chaud</option>
@@ -75,9 +79,19 @@
 
 
   <!-- Nouvelle A partir d'une recette -->
-    <div class="w3-container w3-padding-32" id="Recette">
+    <div class="w3-container w3-padding-32" id="CafeRecette">
       <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">A partir d'une recette existante</h3>
       <p>Dans cette section vous pouvez selectionner la recette devotre choix pour faire un café immédiatement. </p>
+      <input type="checkbox" id="CafeInstantRecette">
+      <span>Voulez vous faire un café à partir d'une recette existante ? (Si oui Veuillez cocher) </span>
+      <br><br>
+
+      <form action="CafeInstantaneRecette" method="post">
+        <label for="cafe"> Nombre de dose de café:</label>
+        <p id ="result"></p>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
 
     </div>
 
