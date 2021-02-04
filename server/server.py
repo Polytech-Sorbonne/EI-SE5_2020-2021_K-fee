@@ -4,6 +4,7 @@
 import http.server, urllib.parse, sqlite3, threading
 import paho.mqtt.client as mqtt
 import socketserver,_thread
+import json
 
 MQTT_ADDRESS = '192.168.46.198'
 MQTT_USER = 'mickael'
@@ -94,12 +95,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
 			rep = self.mysql.selectRecette(self.path);
+			print(rep)
+			rep = ''.join('%s' %v[0] for v in rep)
+			print(rep)
 			print("GetRecette")
 			if len(rep) > 0:
 				self.send_response(200)
 				self.send_header("Content-type", "text/json")
 				self.end_headers()
-				self.wfile.write(bytes(str(rep)+'\n', 'UTF-8'))
+				self.wfile.write(bytes(rep+'\n', 'UTF-8'))
 			else:
 				self.send_response(404)
 				self.send_header("Content-type", "text/html")
@@ -174,16 +178,11 @@ class MySQL():
 			req = "select %s from %s where id=%s" %(elem[3],elem[1],elem[2])
 		return self.c.execute(req).fetchall()
 
-	def select(self,path):
-		elem = path.split('/')
-		if len(elem) == 2:
-			req = "select * from %s" %(elem[1])
-		else:
-			req = "select %s from %s where id=%s" %(elem[3],elem[1],elem[2])
-		return self.c.execute(req).fetchall()
 
 	def selectRecette(self,path):
-		req = "select * from Recette"
+		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'nb_dose_cafe',nb_dose_cafe,'nb_dose_sucre',nb_dose_sucre,'taille',taille,'temperature',temperature) from RECETTE;"
+		# req = "SELECT id as [Recette.id], nom as [Recette.nom], nb_dose_cafe as [Recette.nb_dose_cafe], nb_dose_sucre as [Recette.nb_dose_sucre], taille as [Recette.taille], temperature as [Recette.temperature] FROM Recette FOR JSON PATH, ROOT('Recette')"
+
 		return self.c.execute(req).fetchall()
 
 
