@@ -8,7 +8,7 @@ import socketserver,_thread
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 	def __init__(self, *args, **kwargs):
-		self.mysql = MySQL('logement.db')
+		self.mysql = MySQL('k_fee.db')
 		super(MyHandler, self).__init__(*args, **kwargs)
 
 	def do_GET(self):
@@ -24,6 +24,16 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageAccueil.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+		elif self.path == '/pageCafe.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageCafe.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+
 
 		# elif self.path == '/style1.css':
 		# 	self.send_response(200)
@@ -64,10 +74,17 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 	def do_POST(self):
 		"""Respond to a POST request."""
 		print("POST " + self.path)
-		if self.path == "/index.html":
+
+		if self.path == '/CafeInstantane':
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
-			path = "/Etudiant"
+			print(query)
+			# path = "/Factures"
+			# rep = self.mysql.insert(path,query)
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
 
 		else:
 			res = urllib.parse.urlparse(self.path)
