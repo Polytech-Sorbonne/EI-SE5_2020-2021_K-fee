@@ -25,9 +25,7 @@ void setup_wifi() {
     delay(500);
     Serial.print(".");
   }
-
   randomSeed(micros());
-
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
@@ -39,7 +37,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] ");
   char dose[length];
-  char monitoring[60];
 
   for (unsigned int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
@@ -52,51 +49,40 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Preparation cafe \n");
 
     Serial.print("Dose de cafe : ");
+    dose_cafe(dose[1]);
     
-    if(dose[1] == '1'){
-      Serial.print("1 rotation dose cafe");
-    }
-    else if(dose[1] == '2'){
-      Serial.print("2 rotation dose cafe");
-    }
-    else if(dose[1] == '3'){
-      Serial.print("3 rotation dose cafe");
-    }
-    else if(dose[1] == '4'){
-      Serial.print("4 rotation dose cafe");
-    }
-
     Serial.print("\nDose de sucre : ");
-    
-    if(dose[2] == '1'){
-      Serial.print("1 rotation dose sucre");
-    }
-    else if(dose[2] == '2'){
-      Serial.print("2 rotation dose sucre");
-    }
-    else if(dose[2] == '3'){
-      Serial.print("3 rotation dose sucre");
-    }
-    else if(dose[2] == '4'){
-      Serial.print("4 rotation dose sucre");
-    }
-
-
-    Serial.print("\nTaille Cafe : \n");
-    Serial.print(dose[3]);
-    if(dose[3] == '1'){
-      Serial.print("Eau chaude en cours  \n");
-      delay(TEMPS_ATTENTE);
-      digitalWrite(16, HIGH);
-      delay(TEMPS_CAFE_PETIT);
-      digitalWrite(16, LOW);
-      Serial.print("Fin eau chaude\n");
-    }
-
+    dose_sucre(dose[2]);
+   
+    Serial.print("\nTaille Cafe : ");
+    taille_cafe(dose[3]);
+  }
   else{
     Serial.print("preparation inconnu\n");
   }
+  char monitoring[60];
+  float rand_cafe_qtt = random(100);
+  float rand_the_qtt = random(100);
+  float rand_chocolat_qtt = random(100);
+  float rand_sucre_qtt = random(100);
 
+  sprintf(monitoring,"Reservoirs : cafe : %.0f%% ",rand_cafe_qtt);
+  client.publish("Monitoring", monitoring);
+
+  sprintf(monitoring,"Reservoirs : the : %.0f%% ",rand_the_qtt);
+  client.publish("Monitoring", monitoring);
+
+  sprintf(monitoring,"Reservoirs : chocolat : %.0f%% ",rand_chocolat_qtt);
+  client.publish("Monitoring", monitoring);
+
+  sprintf(monitoring,"Reservoirs : sucre : %.0f%% ",rand_sucre_qtt);
+  client.publish("Monitoring", monitoring);
+  Serial.print("Fin monitoring\n");
+}
+
+void monitoring(){
+  Serial.print("Debut monitoring\n");
+  char monitoring[60];
   float rand_cafe_qtt = random(100);
   float rand_the_qtt = random(100);
   float rand_chocolat_qtt = random(100);
@@ -115,8 +101,67 @@ void callback(char* topic, byte* payload, unsigned int length) {
   client.publish("Monitoring", monitoring);
 }
 
+void dose_cafe(char dose){
+if(dose == '1'){
+    Serial.print("1 rotation dose cafe");
+  }
+else if(dose == '2'){
+    Serial.print("2 rotation dose cafe");
+  }
+else if(dose == '3'){
+    Serial.print("3 rotation dose cafe");
+  }
+else if(dose == '4'){
+    Serial.print("4 rotation dose cafe");
+  }
+else{
+    Serial.print("Dose cafe inconnu\n");
 }
 
+}
+
+void dose_sucre(char dose){
+if(dose == '1'){
+    Serial.print("1 rotation dose sucre");
+  }
+else if(dose == '2'){
+    Serial.print("2 rotation dose sucre");
+  }
+else if(dose == '3'){
+    Serial.print("3 rotation dose sucre");
+  }
+else if(dose == '4'){
+    Serial.print("4 rotation dose sucre");
+  }
+else{
+    Serial.print("Dose sucre inconnu\n");
+  }
+}
+
+void taille_cafe(char dose){
+if(dose == '1'){
+  Serial.print("Petit Cafe\n");
+  Serial.print("Eau chaude en cours  \n");
+  delay(TEMPS_ATTENTE);
+  digitalWrite(16, HIGH);
+  delay(TEMPS_CAFE_PETIT);
+  digitalWrite(16, LOW);
+  Serial.print("Fin eau chaude\n");
+}
+
+else if(dose == '2'){
+  Serial.print("Grand Cafe\n");
+  Serial.print("Eau chaude en cours  \n");
+  delay(TEMPS_ATTENTE);
+  digitalWrite(16, HIGH);
+  delay(TEMPS_CAFE_GRAND);
+  digitalWrite(16, LOW);
+  Serial.print("Fin eau chaude\n");
+}
+else{
+  Serial.print("Taille tasse inconnu\n");
+}
+}
 
 void reconnect() {
   // Loop until we're reconnected
