@@ -5,10 +5,10 @@ $(document).ready(function(){
     $.ajax({
       url: '/GetRecette',
       type: 'GET',
-      dataType : 'text',
+      dataType : 'JSON',
       success: function(response){
 
-        box.html(response)
+        box.html(response.id);
         //Recette(response)
         console.log(response);
       },
