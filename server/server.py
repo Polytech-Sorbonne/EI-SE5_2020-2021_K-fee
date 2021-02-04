@@ -24,6 +24,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageAccueil.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+		elif self.path == '/script.js':
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("script.js","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 		elif self.path == '/pageCafe.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -32,6 +41,33 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageCafe.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+		elif self.path == '/pageHist.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageHist.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+		elif self.path == '/pageRoutine.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageRoutine.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+		# elif self.path == '/pageRecette.html':
+		# 	self.send_response(200)
+		# 	self.send_header("Content-type", "text/html")
+		# 	self.end_headers()
+		# 	#ouverture en lecture
+		# 	f = open("pageCafe.html","r") #lecture
+		# 	s = f.read()
+		# 	self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 
 
@@ -52,6 +88,19 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		# 	s = f.read()
 		# 	self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/GetRecette':
+			#ouverture en lecture
+			rep = self.mysql.selectRecette(self.path);
+			print("GetRecette")
+			if len(rep) > 0:
+				self.send_response(200)
+				self.send_header("Content-type", "text/json")
+				self.end_headers()
+				self.wfile.write(bytes(str(rep)+'\n', 'UTF-8'))
+			else:
+				self.send_response(404)
+				self.send_header("Content-type", "text/html")
+				self.end_headers()
 
 		else :
 			res = urllib.parse.urlparse(self.path)
@@ -111,6 +160,18 @@ class MySQL():
 			req = "select * from %s" %(elem[1])
 		else:
 			req = "select %s from %s where id=%s" %(elem[3],elem[1],elem[2])
+		return self.c.execute(req).fetchall()
+
+	def select(self,path):
+		elem = path.split('/')
+		if len(elem) == 2:
+			req = "select * from %s" %(elem[1])
+		else:
+			req = "select %s from %s where id=%s" %(elem[3],elem[1],elem[2])
+		return self.c.execute(req).fetchall()
+
+	def selectRecette(self,path):
+		req = "select * from Recette"
 		return self.c.execute(req).fetchall()
 
 
