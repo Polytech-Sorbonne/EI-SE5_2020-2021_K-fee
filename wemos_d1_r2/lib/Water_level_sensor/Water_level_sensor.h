@@ -1,19 +1,17 @@
 #include <Wire.h>
 #include <Arduino.h>
 
+#pragma once
 #ifndef WATER_LEVEL_SENSOR_H
 #define WATER_LEVEL_SENSOR_H
 
 #ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
 #define SERIAL SerialUSB
 #else
-#define SERIAL Serial
+//#define SERIAL Serial
 #endif
  
-unsigned char low_data[8] = {0};
-unsigned char high_data[12] = {0};
- 
- 
+
 #define NO_TOUCH       0xFE
 #define THRESHOLD      100
 #define ATTINY1_HIGH_ADDR   0x78

@@ -1,6 +1,10 @@
 
 #include <Water_level_sensor.h>
 
+unsigned char low_data[8] = {0};
+unsigned char high_data[12] = {0};
+ 
+
 void getHigh12SectionValue(void)
 {
   memset(high_data, 0, sizeof(high_data));
@@ -95,11 +99,11 @@ void check()
       trig_section++;
       touch_val >>= 1;
     }
-    SERIAL.print("water level = ");
-    SERIAL.print(trig_section * 5);
-    SERIAL.println("% ");
-    SERIAL.println(" ");
-    SERIAL.println("*********************************************************");
+    Serial.print("water level = ");
+    Serial.print(trig_section * 5);
+    Serial.println("% ");
+    Serial.println(" ");
+    Serial.println("*********************************************************");
     delay(1000);
   }
 }
@@ -170,11 +174,11 @@ uint8_t get_water_level(){
       trig_section++;
       touch_val >>= 1;
     }
-    // SERIAL.print("water level = ");
-    // SERIAL.print(trig_section * 5);
-    // SERIAL.println("% ");
-    // SERIAL.println(" ");
-    // SERIAL.println("*********************************************************");
+    // Serial.print("water level = ");
+    // Serial.print(trig_section * 5);
+    // Serial.println("% ");
+    // Serial.println(" ");
+    // Serial.println("*********************************************************");
     delay(1000);
     return trig_section;
 }

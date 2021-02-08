@@ -3,7 +3,7 @@
 
 const char* ssid = "S20+";
 const char* password = "12345678abc";
-const char* mqtt_server = "192.168.46.198";
+const char* mqtt_server = "192.168.118.226";
 
 const char* mqtt_username = "mickael"; // MQTT username
 const char* mqtt_password = "mickael"; // MQTT password
