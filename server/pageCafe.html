@@ -79,8 +79,13 @@
       <br><br>
 
       <form action="CafeInstantaneRecette" method="post">
-        <label for="cafe"> Nombre de dose de café:</label>
         <p id ="result"></p>
+        <label for="cafe"> Choisissez une recette existante :</label>
+        <select name="Recette" id="Recette">
+          <option value="Grand">Grand</option>
+          <option value="Petit">Petit</option>
+        </select>
+
         <br><br>
         <input type="submit" value="Submit">
       </form>

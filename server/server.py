@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import socketserver,_thread
 import json
 
-MQTT_ADDRESS = '192.168.46.198'
+MQTT_ADDRESS = '192.168.118.226'
 MQTT_USER = 'mickael'
 MQTT_PASSWORD = 'mickael'
 
@@ -95,20 +95,20 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
 			rep = self.mysql.selectRecette(self.path);
-			# print(rep)
-			# res = '{'
-			# for v in rep :
-			# 	res += 'Recette : '
-			# 	res += v[0]
-			# 	print(res)
-			# res += '}'
-			# rep = '{Recette : {'.join('%s' %v[0] for v in rep)
-			print("GetRecette")
+			print(rep)
+			res = '{'
+			res += '"Recette" : ['
+			for v in rep :
+				res += v[0]
+				res += ','
+			res = res[:-1]
+			res += ']}'
+			print(res)
 			if len(rep) > 0 :
 				self.send_response(200)
 				self.send_header("Content-type", "text/json")
 				self.end_headers()
-				self.wfile.write(bytes(str(rep)+'\n', 'UTF-8'))
+				self.wfile.write(bytes(str(res)+'\n', 'UTF-8'))
 			else:
 				self.send_response(404)
 				self.send_header("Content-type", "text/html")
