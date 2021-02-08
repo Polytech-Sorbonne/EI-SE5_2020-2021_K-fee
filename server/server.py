@@ -20,7 +20,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		print("GET" + self.path)
 		if self.path == '/favicon.ico':
 			return
-		if self.path == '/':
+		if self.path == '/' or self.path == '/pageAccueil.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
