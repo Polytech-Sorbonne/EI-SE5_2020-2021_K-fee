@@ -35,7 +35,7 @@ void setup_wifi() {
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
+  Serial.print("\nMessage arrived [");
   Serial.print(topic);
   Serial.print("] ");
   char dose[length];
@@ -46,35 +46,52 @@ void callback(char* topic, byte* payload, unsigned int length) {
     dose[i] = (char)payload[i];
   }
   Serial.println();
-  
   Serial.println();
 
   if(dose[0] == '1'){
     Serial.print("Preparation cafe \n");
+
     Serial.print("Dose de cafe : ");
-    Serial.print(dose[1]);
-    Serial.print("\nDose de sucre : ");
-    Serial.print(dose[2]);
-    Serial.print("\n");
-  }
+    
+    if(dose[1] == '1'){
+      Serial.print("1 rotation dose cafe");
+    }
+    else if(dose[1] == '2'){
+      Serial.print("2 rotation dose cafe");
+    }
+    else if(dose[1] == '3'){
+      Serial.print("3 rotation dose cafe");
+    }
+    else if(dose[1] == '4'){
+      Serial.print("4 rotation dose cafe");
+    }
 
-  else if(dose[0] == '2'){
-    Serial.print("Preparation the \n");
-    Serial.print("Dose de the : ");
-    Serial.print(dose[1]);
     Serial.print("\nDose de sucre : ");
-    Serial.print(dose[2]);
-    Serial.print("\n");
-  }
+    
+    if(dose[2] == '1'){
+      Serial.print("1 rotation dose sucre");
+    }
+    else if(dose[2] == '2'){
+      Serial.print("2 rotation dose sucre");
+    }
+    else if(dose[2] == '3'){
+      Serial.print("3 rotation dose sucre");
+    }
+    else if(dose[2] == '4'){
+      Serial.print("4 rotation dose sucre");
+    }
 
-  else if(dose[0] == '3'){
-    Serial.print("Preparation chocolat \n");
-    Serial.print("Dose de chocolat : ");
-    Serial.print(dose[1]);
-    Serial.print("\nDose de sucre : ");
-    Serial.print(dose[2]);
-    Serial.print("\n");
-  }
+
+    Serial.print("\nTaille Cafe : \n");
+    Serial.print(dose[3]);
+    if(dose[3] == '1'){
+      Serial.print("Eau chaude en cours  \n");
+      delay(TEMPS_ATTENTE);
+      digitalWrite(16, HIGH);
+      delay(TEMPS_CAFE_PETIT);
+      digitalWrite(16, LOW);
+      Serial.print("Fin eau chaude\n");
+    }
 
   else{
     Serial.print("preparation inconnu\n");
@@ -96,6 +113,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   sprintf(monitoring,"Reservoirs : sucre : %.0f%% ",rand_sucre_qtt);
   client.publish("Monitoring", monitoring);
+}
+
 }
 
 
@@ -125,7 +144,7 @@ void reconnect() {
 }
 
 void setup_pub_sub() {
-  pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  pinMode(16, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);

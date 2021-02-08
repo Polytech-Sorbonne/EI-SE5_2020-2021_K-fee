@@ -21,7 +21,7 @@ def main():
     mqtt_client.on_publish = on_publish
 
     mqtt_client.connect(MQTT_ADDRESS, 1883)
-    mqtt_client.publish("home/kfee",str(sys.argv[1])+str(sys.argv[2])+str(sys.argv[3]))
+    mqtt_client.publish("home/kfee",str(sys.argv[1])+str(sys.argv[2])+str(sys.argv[3])+str(sys.argv[4])+str(sys.argv[5]))
   
 
 
