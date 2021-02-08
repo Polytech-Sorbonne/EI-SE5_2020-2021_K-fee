@@ -8,7 +8,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="script.js"></script>
-
 </head>
 
 <!-- Header -->
@@ -32,29 +31,6 @@
     <button onclick="activeCafeRecette()" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</button>
   </div>
 
-  <script>
-    function activeNouveauCafe() {
-      var div = document.getElementById("NouveauCafe");
-      if (div.style.display == "none"){
-        div.style.display = "block";
-      }
-      else{
-        div.style.display = "none";
-      }
-    }
-  </script>
-
-<script>
-  function activeCafeRecette() {
-    var div = document.getElementById("CafeRecette");
-    if (div.style.display == "none"){
-      div.style.display = "block";
-    }
-    else{
-      div.style.display = "none";
-    }
-  }
-</script>
 
 <!-- Nouveau café -->
   <div class="w3-container w3-padding-32" id="NouveauCafe" style="display:none">
@@ -119,7 +95,25 @@
       </form>
 
     </div>
+  
+    <a href="#nouvelle" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouvelle </b>Routine</a>
+    <a href="#toutes" class="w3-bar-item w3-button" style =" width:50% ;"><b>Toutes </b>Routines</a>
+  </div>
 
+<!-- Nouvelle routine Section -->
+  <div class="w3-container w3-padding-32" id="nouvelle">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nouvelle routine</h3>
+    <p>Dans cette section vous pouvez selectionner le nom de votre nouvelle routine et les jours ou vous souhaitez programmer un ou des cafés. </p>
+    <label for="pwd" > Nouveau nom :</label>
+    <input class="form-control" placeholder="taper" name="nom de routine" >
+    <button class="w3-button w3-black w3-section">
+      <li><a href="./pageCafe.html"> Page élaboration d'un café</a></li>
+    </button>
+  </div>
+<p>Retour à la Page d'Accueil</p>
+<ul>
+  <li><a href="./pageAccueil.html">K-Fée</a></li>
+</ul>
 
 </div>
 </body>
