@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import socketserver,_thread
 import json
 
-MQTT_ADDRESS = '192.168.46.198'
+MQTT_ADDRESS = '192.168.118.226'
 MQTT_USER = 'mickael'
 MQTT_PASSWORD = 'mickael'
 
@@ -96,14 +96,19 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			#ouverture en lecture
 			rep = self.mysql.selectRecette(self.path);
 			print(rep)
-			rep = ''.join('%s' %v[0] for v in rep)
-			print(rep)
-			print("GetRecette")
-			if len(rep) > 0:
+			res = '{'
+			res += '"Recette" : ['
+			for v in rep :
+				res += v[0]
+				res += ','
+			res = res[:-1]
+			res += ']}'
+			print(res)
+			if len(rep) > 0 :
 				self.send_response(200)
 				self.send_header("Content-type", "text/json")
 				self.end_headers()
-				self.wfile.write(bytes(rep+'\n', 'UTF-8'))
+				self.wfile.write(bytes(str(res)+'\n', 'UTF-8'))
 			else:
 				self.send_response(404)
 				self.send_header("Content-type", "text/html")
@@ -217,9 +222,9 @@ if __name__ == '__main__':
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
-	mqtt_client = mqtt.Client()
-	mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-	mqtt_client.connect(MQTT_ADDRESS, 1883)
+	# mqtt_client = mqtt.Client()
+	# mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+	# mqtt_client.connect(MQTT_ADDRESS, 1883)
 
 	try:
 	# Mono connection : méthode of the server object to process one or many requests
