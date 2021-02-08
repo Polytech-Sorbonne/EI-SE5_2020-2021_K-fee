@@ -20,3 +20,23 @@ $(document).ready(function(){
     });
   });
 });
+
+function activeNouveauCafe() {
+  var div = document.getElementById("NouveauCafe");
+  if (div.style.display == "none"){
+    div.style.display = "block";
+  }
+  else{
+    div.style.display = "none";
+  }
+}
+
+function activeCafeRecette() {
+var div = document.getElementById("CafeRecette");
+if (div.style.display == "none"){
+  div.style.display = "block";
+}
+else{
+  div.style.display = "none";
+}
+}
