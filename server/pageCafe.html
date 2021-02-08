@@ -28,13 +28,37 @@
 
 <div class="w3-container w3-padding-32" id="add">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-    <a href="#NouveauCafe" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouveau </b>Café</a>
-    <a id="CafeRecette" href="#CafeInstantRecette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
+    <button onclick="activeNouveauCafe()" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouveau </b>Café</button>
+    <button onclick="activeCafeRecette()" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</button>
   </div>
 
-<!-- Nouvelle café -->
-  <div class="w3-container w3-padding-32" id="NouveauCafe">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nouvelle café</h3>
+  <script>
+    function activeNouveauCafe() {
+      var div = document.getElementById("NouveauCafe");
+      if (div.style.display == "none"){
+        div.style.display = "block";
+      }
+      else{
+        div.style.display = "none";
+      }
+    }
+  </script>
+
+<script>
+  function activeCafeRecette() {
+    var div = document.getElementById("CafeRecette");
+    if (div.style.display == "none"){
+      div.style.display = "block";
+    }
+    else{
+      div.style.display = "none";
+    }
+  }
+</script>
+
+<!-- Nouveau café -->
+  <div class="w3-container w3-padding-32" id="NouveauCafe" style="display:none">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nouveau café</h3>
     <p>Dans cette section vous pouvez selectionner les paramètres de votre café pour le boire immédiatement. </p>
 
     <form action="CafeInstantane" method="post">
@@ -49,6 +73,7 @@
 
       <label for="cafe"> Nombre de dose de sucre:</label>
       <select name="cafesucre" id="nb_dose_sucre">
+        <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -58,8 +83,8 @@
 
       <label for="cafe"> Taille de votre café:</label>
       <select name="cafeTaille" id="taille">
-        <option value="Grand">Grand</option>
         <option value="Petit">Petit</option>
+        <option value="Grand">Grand</option>
       </select>
       <br><br>
 
@@ -72,16 +97,16 @@
       <br><br>
 
 
-      <input type="submit" value="Submit">
+      <input class="w3-button w3-black w3-section" type="submit" value="Submit">
     </form>
 
   </div>
 
 
   <!-- Nouvelle A partir d'une recette -->
-    <div class="w3-container w3-padding-32" id="CafeRecette">
+    <div class="w3-container w3-padding-32" id="CafeRecette" style="display:none">
       <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">A partir d'une recette existante</h3>
-      <p>Dans cette section vous pouvez selectionner la recette devotre choix pour faire un café immédiatement. </p>
+      <p>Dans cette section vous pouvez selectionner la recette de votre choix pour faire un café immédiatement. </p>
       <input type="checkbox" id="CafeInstantRecette">
       <span>Voulez vous faire un café à partir d'une recette existante ? (Si oui Veuillez cocher) </span>
       <br><br>
@@ -90,7 +115,7 @@
         <label for="cafe"> Nombre de dose de café:</label>
         <p id ="result"></p>
         <br><br>
-        <input type="submit" value="Submit">
+        <input class="w3-button w3-black w3-section" type="submit" value="Submit">
       </form>
 
     </div>
