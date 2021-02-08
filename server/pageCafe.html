@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Café</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <img class="w3-image" src="https://img.huffingtonpost.com/asset/5c938484220000c5001c4289.jpeg?ops=scalefit_720_noupscale" alt="Argent" width="1500" height="800">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-dark"> <span class="w3-padding w3-black w3-opacity-min">Faire un café</span></h1>
+</header>
+
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="pageAccueil.html" class="w3-bar-item w3-button"><b>K-Fée</b> : Cafe</a>
+  </div>
+</div>
+
+<body>
+
+<div class="w3-container w3-padding-32" id="add">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="#NouveauCafe" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouveau </b>Café</a>
+    <a id="CafeRecette" href="#CafeInstantRecette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
+  </div>
+
+<!-- Nouvelle café -->
+  <div class="w3-container w3-padding-32" id="NouveauCafe">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nouvelle café</h3>
+    <p>Dans cette section vous pouvez selectionner les paramètres de votre café pour le boire immédiatement. </p>
+
+    <form action="CafeInstantane" method="post">
+      <label for="cafe"> Nombre de dose de café:</label>
+      <select name="cafe" id="nb_dose_cafe">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <br><br>
+
+      <label for="cafe"> Nombre de dose de sucre:</label>
+      <select name="cafesucre" id="nb_dose_sucre">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <br><br>
+
+      <label for="cafe"> Taille de votre café:</label>
+      <select name="cafeTaille" id="taille">
+        <option value="Grand">Grand</option>
+        <option value="Petit">Petit</option>
+      </select>
+      <br><br>
+
+
+      <input type="submit" value="Submit">
+    </form>
+
+  </div>
+
+
+  <!-- Nouvelle A partir d'une recette -->
+    <div class="w3-container w3-padding-32" id="CafeRecette">
+      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">A partir d'une recette existante</h3>
+      <p>Dans cette section vous pouvez selectionner la recette devotre choix pour faire un café immédiatement. </p>
+      <input type="checkbox" id="CafeInstantRecette">
+      <span>Voulez vous faire un café à partir d'une recette existante ? (Si oui Veuillez cocher) </span>
+      <br><br>
+
+      <form action="CafeInstantaneRecette" method="post">
+        <label for="cafe"> Nombre de dose de café:</label>
+        <p id ="result"></p>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
+
+    </div>
+
+
+</div>
+</body>
+</html>
