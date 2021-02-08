@@ -8,7 +8,9 @@
 
 // Update these with values suitable for your network.
 
-
+#define TEMPS_CAFE_PETIT 85000
+#define TEMPS_CAFE_GRAND 250000
+#define TEMPS_ATTENTE 5000
 
 void setup_wifi();
 void callback(char* topic, byte* payload, unsigned int length);
