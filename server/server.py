@@ -28,6 +28,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageAccueil.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+			
 		elif self.path == '/script.js':
 			self.send_response(200)
 			self.send_header("Content-type", "text/js")

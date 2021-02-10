@@ -11,7 +11,8 @@ DROP TABLE IF EXISTS Possede_HeureRecette;
 -- commandes de creation des tables
 CREATE TABLE Routine (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nom TEXT NOT NULL);
+    nom TEXT NOT NULL,
+    etat TEXT NOT NULL);
 
 CREATE TABLE Recette (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
