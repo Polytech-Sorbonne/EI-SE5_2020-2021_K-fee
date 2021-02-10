@@ -1,8 +1,8 @@
 
 #include "client_MQTT.h"
 
-const char* ssid = "S20+";
-const char* password = "12345678abc";
+char ssid[] = "S20+";
+char password[] = "12345678abc";
 const char* mqtt_server = "192.168.118.226";
 
 const char* mqtt_username = "mickael"; // MQTT username
@@ -19,7 +19,7 @@ void setup_wifi() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid,password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);

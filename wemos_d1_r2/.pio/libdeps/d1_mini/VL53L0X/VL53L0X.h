@@ -98,6 +98,7 @@ class VL53L0X
     uint8_t last_status; // status of last I2C transmission
 
     VL53L0X();
+    VL53L0X(uint8_t adresss);
 
     void setBus(TwoWire * bus) { this->bus = bus; }
     TwoWire * getBus() { return bus; }

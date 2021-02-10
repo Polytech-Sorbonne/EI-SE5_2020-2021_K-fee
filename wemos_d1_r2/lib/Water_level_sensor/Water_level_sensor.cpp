@@ -123,8 +123,8 @@ uint8_t get_water_level(){
     // Serial.println("low 8 sections value = ");
     for (int i = 0; i < 8; i++)
     {
-      Serial.print(low_data[i]);
-      Serial.print(".");
+      // Serial.print(low_data[i]);
+      // Serial.print(".");
       if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
       {
         low_count++;
@@ -140,8 +140,8 @@ uint8_t get_water_level(){
     // Serial.println("high 12 sections value = ");
     for (int i = 0; i < 12; i++)
     {
-      Serial.print(high_data[i]);
-      Serial.print(".");
+      // Serial.print(high_data[i]);
+      // Serial.print(".");
  
       if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
       {
@@ -154,8 +154,8 @@ uint8_t get_water_level(){
       }
     }
  
-    Serial.println("  ");
-    Serial.println("  ");
+    // Serial.println("  ");
+    // Serial.println("  ");
  
     for (int i = 0 ; i < 8; i++) {
       if (low_data[i] > THRESHOLD) {
@@ -179,6 +179,6 @@ uint8_t get_water_level(){
     // Serial.println("% ");
     // Serial.println(" ");
     // Serial.println("*********************************************************");
-    delay(1000);
-    return trig_section;
+    // delay(1000);
+    return trig_section * 5;
 }
