@@ -26,10 +26,11 @@ function Recette(response) {
 
   for (var i = 0; i < response["Recette"].length ; i++) {
 
-      var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> <p> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</p>';
-      chaine += "<p>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</p>';
-      chaine += "<p>Taille : " + response["Recette"][i]['taille']+ '</p>';
-      chaine += "<p>Température : " + response["Recette"][i]['temperature']+ '</p></div>';
+      var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
+      chaine += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
+      chaine += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
+      chaine += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
+      chaine += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
       document.getElementById("result").innerHTML += chaine;
 
 
