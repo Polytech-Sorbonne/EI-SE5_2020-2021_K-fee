@@ -53,3 +53,8 @@ CREATE TABLE Possede_HeureRecette (
     FOREIGN KEY (idRecette) REFERENCES Recette(id)
     PRIMARY KEY (idHeure,idRecette));
 -- insertion de données
+
+INSERT INTO Recette (nom,nb_dose_cafe,nb_dose_sucre, taille, temperature) VALUES
+       ("Cafe Long", 4, 1, "Grand", "Chaud"),
+       ("Cafe Court", 2, 0, "Petit", "Très Chaud"),
+       ("Cafe Matin", 3, 1, "Grand", "Chaud");

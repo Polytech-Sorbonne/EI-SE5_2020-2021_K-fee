@@ -28,7 +28,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageAccueil.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-			
+
 		elif self.path == '/script.js':
 			self.send_response(200)
 			self.send_header("Content-type", "text/js")
@@ -65,38 +65,20 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
-		# elif self.path == '/pageRecette.html':
-		# 	self.send_response(200)
-		# 	self.send_header("Content-type", "text/html")
-		# 	self.end_headers()
-		# 	#ouverture en lecture
-		# 	f = open("pageCafe.html","r") #lecture
-		# 	s = f.read()
-		# 	self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+		elif self.path == '/pageRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
-
-
-		# elif self.path == '/style1.css':
-		# 	self.send_response(200)
-		# 	self.send_header("Content-type", "text/css")
-		# 	self.end_headers()
-		# 	#ouverture en lecture
-		# 	f = open("style1.css","r") #lecture
-		# 	s = f.read()
-		# 	self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-		# elif self.path == '/interaction1.js':
-		# 	self.send_response(200)
-		# 	self.send_header("Content-type", "text/js")
-		# 	self.end_headers()
-		# 	#ouverture en lecture
-		# 	f = open("interaction1.js","r") #lecture
-		# 	s = f.read()
-		# 	self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
 			rep = self.mysql.selectRecette(self.path);
-			print(rep)
+			#print(rep)
 			res = '{'
 			res += '"Recette" : ['
 			for v in rep :
@@ -104,7 +86,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				res += ','
 			res = res[:-1]
 			res += ']}'
-			print(res)
+			#print(res)
 			if len(rep) > 0 :
 				self.send_response(200)
 				self.send_header("Content-type", "text/json")
@@ -150,12 +132,33 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 					val += "1"
 				else :
 					val += v[0]
-			print(val)
+			#print(val)
 			mqtt_client.publish("home/kfee",val)
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
+
+		elif self.path == '/Recette':
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			print(query)
+			self.mysql.insert(self.path,query);
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+
+		elif self.path == '/supprRecette':
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			print(query)
+			self.mysql.deleteRecette(self.path,query)
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+
 
 		else:
 			res = urllib.parse.urlparse(self.path)
@@ -209,6 +212,16 @@ class MySQL():
 		print(req)
 		self.c.execute(req)
 		self.conn.commit()
+
+	def deleteRecette(self,path,query):
+		print(query)
+		val = ', '.join('"%s"' %v[0] for v in query.values())
+		print(val)
+		req = "DELETE FROM Recette where nom =  (%s)" %(val)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
 
 
 class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
