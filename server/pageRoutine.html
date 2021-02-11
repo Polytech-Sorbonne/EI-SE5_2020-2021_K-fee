@@ -50,14 +50,22 @@
         
         <dd>
             <!-- Creer Jour Lundi (si value de checkLundi = check)-->
-            <input type="checkbox" value="uncheck" id="checkLundi" onclick="activeLundi()">
+            <input type="checkbox" value="uncheck" id="checkLundi" name="Lundi" onclick="activeLundi()">
             <label for="pwd" > Lundi <br> </label>
             <div id="Lundi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Lundi :</p>
                 <!-- Creer Heure lundi (si value de checkLundi = check)-->
-                <input type="time" id="heure_Lundi" name="heure Lundi"
+                <input type="time" id="heure_Lundi" name="heureLundi"
                 min="00:00" max="23:59" >
-                
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteLundi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
+                <div id = "result"> </div>
+                <div id = "result2"> </div>
+                        
             </div>
             <br>
             
@@ -80,13 +88,19 @@
             </script>
 
             <!-- Creer Jour Mardi (si value de checkMardi = check)-->
-            <input type="checkbox" value="uncheck" id="checkMardi" onclick="activeMardi()">
+            <input type="checkbox" value="uncheck" id="checkMardi" name="Mardi" onclick="activeMardi()">
             <label for="pwd" > Mardi <br> </label>
             <div id="Mardi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Mardi :</p>
                 <!-- Creer Heure Mardi (si value de checkMardi = check)-->
-                <input type="time" id="heure_Mardi" name="heure Mardi"
+                <input type="time" id="heure_Mardi" name="heureMardi"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteMardi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
@@ -109,13 +123,19 @@
             </script>
             
             <!-- Creer Jour Mercredi (si value de checkMercredi = check)-->
-            <input type="checkbox" value="uncheck" id="checkMercredi" onclick="activeMercredi()">
+            <input type="checkbox" value="uncheck" id="checkMercredi" name="Mercredi" onclick="activeMercredi()">
             <label for="pwd" > Mercredi <br> </label>
             <div id="Mercredi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Mercredi :</p>
                 <!-- Creer Heure Mercredi (si value de checkMercredi = check)-->
-                <input type="time" id="heure_Mercredi" name="heure Mercredi"
+                <input type="time" id="heure_Mercredi" name="heureMercredi"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteMercredi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
@@ -138,13 +158,19 @@
             </script>
             
             <!-- Creer Jour Jeudi (si value de checkJeudi = check)-->
-            <input type="checkbox" value="uncheck" id="checkJeudi" onclick="activeJeudi()">
+            <input type="checkbox" value="uncheck" id="checkJeudi" name="Jeudi" onclick="activeJeudi()">
             <label for="pwd" > Jeudi <br> </label>
             <div id="Jeudi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Jeudi :</p>
                 <!-- Creer Heure Jeudi (si value de checkJeudi = check)-->
-                <input type="time" id="heure_Jeudi" name="heure Jeudi"
+                <input type="time" id="heure_Jeudi" name="heureJeudi"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteJeudi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
@@ -167,13 +193,19 @@
             </script>
             
             <!-- Creer Jour Vendredi (si value de checkVendredi = check)-->
-            <input type="checkbox" value="uncheck" id="checkVendredi" onclick="activeVendredi()">
+            <input type="checkbox" value="uncheck" id="checkVendredi" name="Vendredi" onclick="activeVendredi()">
             <label for="pwd" > Vendredi <br> </label>
             <div id="Vendredi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Vendredi :</p>
                 <!-- Creer Heure Vendredi (si value de checkVendredi = check)-->
-                <input type="time" id="heure_Vendredi" name="heure Vendredi"
+                <input type="time" id="heure_Vendredi" name="heureVendredi"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteVendredi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
@@ -196,13 +228,19 @@
             </script>
             
             <!-- Creer Jour Samedi (si value de checkSamedi = check)-->
-            <input type="checkbox" value="uncheck" id="checkSamedi" onclick="activeSamedi()">
+            <input type="checkbox" value="uncheck" id="checkSamedi" name="Samedi" onclick="activeSamedi()">
             <label for="pwd" > Samedi <br> </label>
             <div id="Samedi" style="display:none">
                 <p> Choisissez une horaire pour votre café de Samedi :</p>
                 <!-- Creer Heure Samedi (si value de checkSamedi = check)-->
-                <input type="time" id="heure_Samedi" name="heure Samedi"
+                <input type="time" id="heure_Samedi" name="heureSamedi"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteSamedi" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
@@ -225,13 +263,19 @@
             </script>
             
             <!-- Creer Jour Dimanche (si value de checkDimanche = check)-->
-            <input type="checkbox" value="uncheck" id="checkDimanche" onclick="activeDimanche()">
+            <input type="checkbox" value="uncheck" id="checkDimanche" name="Dimanche" onclick="activeDimanche()">
             <label for="pwd" > Dimanche <br> </label>
             <div id="Dimanche" style="display:none">
                 <p> Choisissez une horaire pour votre café de Dimanche :</p>
                 <!-- Creer Heure Dimanche (si value de checkDimanche = check)-->
-                <input type="time" id="heure_Dimanche" name="heure Dimanche"
+                <input type="time" id="heure_Dimanche" name="heureDimanche"
                 min="00:00" max="23:59" >
+                <br>
+                <label> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+                <select name="recetteDimanche" id ="ajoutSelect" onchange="AfficheRecette()" >
+                    <option>--Please choose an option--</option>
+                </select>
+
             </div>
             <br>
             
