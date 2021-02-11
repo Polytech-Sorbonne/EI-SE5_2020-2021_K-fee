@@ -38,36 +38,38 @@
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-coffee"></i>Nouveau café</h3>
     <p>Dans cette section vous pouvez selectionner les paramètres de votre café pour le boire immédiatement. </p>
 
-    <form action="CafeInstantane" method="post">
-      <label for="cafe"> Nombre de dose de café:</label>
-      <select name="cafe" id="nb_dose_cafe">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-      <br><br>
+    <dd>
+      <form action="CafeInstantane" method="post">
+        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Nombre de dose de café:</label>
+        <select name="cafe" id="nb_dose_cafe">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <br><br>
 
-      <label for="cafe"> Nombre de dose de sucre:</label>
-      <select name="cafesucre" id="nb_dose_sucre">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-      <br><br>
+        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Nombre de dose de sucre:</label>
+        <select name="cafesucre" id="nb_dose_sucre">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <br><br>
 
-      <label for="cafe"> Taille de votre café:</label>
-      <select name="cafeTaille" id="taille">
-        <option value="Petit">Petit</option>
-        <option value="Grand">Grand</option>
-      </select>
-      <br><br>
+        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Taille de votre café:</label>
+        <select name="cafeTaille" id="taille">
+          <option value="Petit">Petit</option>
+          <option value="Grand">Grand</option>
+        </select>
+        <br><br>
 
 
-      <input class="w3-button w3-black w3-section" type="submit" value="Submit">
-    </form>
+        <input class="w3-button w3-black w3-section" type="submit" value="Submit">
+      </form>
+    </dd>
 
   </div>
 
@@ -77,21 +79,20 @@
      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-book"></i>A partir d'une recette existante </h3>
      <p>Dans cette section vous pouvez selectionner la recette devotre choix pour faire un café immédiatement. </p>
 
-     <form action="ajoutSelect" method="post">
+     <dd>
+     <form action="ajoutSelect" method="post">    
+      <label for="cafe"> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
+      <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
+        <option value="">--Please choose an option--</option>
+      </select>
 
-       <label for="cafe"> Choisissez une recette existante :</label>
-       <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
-         <option value="">--Please choose an option--</option>
-       </select>
-
-       <div id = "result"> </div>
-       <div id = "result2"> </div>
-       <br><br>
-       <input class="w3-button w3-black w3-section" type="submit" value="Submit">
+      <div id = "result"> </div>
+      <div id = "result2"> </div>
+      <br>
+      <input class="w3-button w3-black w3-section" type="submit" value="Submit">
      </form>
-
+    </dd>
    </div>
-
 
 </div>
 </body>

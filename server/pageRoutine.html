@@ -39,220 +39,223 @@
         <!-- Nom de la routine -->
         <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nom de la Routine</h4>
         <p> Choisissez bien le nom de votre routine de façon à facilement vous souvenir de son contenu.</p>
-        <label for="pwd" > Nouveau nom :</label>
-        <input  id="nom_routine" class="form-control" placeholder="Entrez un texte" name="nom de routine">
-
+        <dd>
+            <label for="pwd" > <i class="fa fa-fw fa-star"></i> Nouveau nom :</label>
+            <input  id="nom_routine" class="form-control" placeholder="Entrez un texte" name="nom">
+        </dd>
 
         <!-- Selection des jours de la semaine (routine possède jour)-->
         <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16">Jour de la Semaine</h3>
         <p> Cochez le ou les jour(s) de la semaine où vous souhaitez programmmer un café.</p>
         
-        <!-- Creer Jour Lundi (si value de checkLundi = check)-->
-        <input type="checkbox" value="uncheck" id="checkLundi" onclick="activeLundi()">
-        <label for="pwd" > Lundi <br> </label>
-        <div id="Lundi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Lundi :</p>
-            <!-- Creer Heure lundi (si value de checkLundi = check)-->
-            <input type="time" id="heure_Lundi" name="heure Lundi"
-            min="00:00" max="23:59" >
+        <dd>
+            <!-- Creer Jour Lundi (si value de checkLundi = check)-->
+            <input type="checkbox" value="uncheck" id="checkLundi" onclick="activeLundi()">
+            <label for="pwd" > Lundi <br> </label>
+            <div id="Lundi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Lundi :</p>
+                <!-- Creer Heure lundi (si value de checkLundi = check)-->
+                <input type="time" id="heure_Lundi" name="heure Lundi"
+                min="00:00" max="23:59" >
+                
+            </div>
+            <br>
             
-        </div>
-        <br>
-        
-        <script>
-            function activeLundi() {
-                var checkBox = document.getElementById("checkLundi");
-                var div = document.getElementById("Lundi");
-                var hour = document.getElementById("heure_Lundi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required= true;
+            <script>
+                function activeLundi() {
+                    var checkBox = document.getElementById("checkLundi");
+                    var div = document.getElementById("Lundi");
+                    var hour = document.getElementById("heure_Lundi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required= true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
-                }
-            }
-        </script>
+            </script>
 
-        <!-- Creer Jour Mardi (si value de checkMardi = check)-->
-        <input type="checkbox" value="uncheck" id="checkMardi" onclick="activeMardi()">
-        <label for="pwd" > Mardi <br> </label>
-        <div id="Mardi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Mardi :</p>
-            <!-- Creer Heure Mardi (si value de checkMardi = check)-->
-            <input type="time" id="heure_Mardi" name="heure Mardi"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeMardi() {
-                var checkBox = document.getElementById("checkMardi");
-                var div = document.getElementById("Mardi");
-                var hour = document.getElementById("heure_Mardi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
+            <!-- Creer Jour Mardi (si value de checkMardi = check)-->
+            <input type="checkbox" value="uncheck" id="checkMardi" onclick="activeMardi()">
+            <label for="pwd" > Mardi <br> </label>
+            <div id="Mardi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Mardi :</p>
+                <!-- Creer Heure Mardi (si value de checkMardi = check)-->
+                <input type="time" id="heure_Mardi" name="heure Mardi"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeMardi() {
+                    var checkBox = document.getElementById("checkMardi");
+                    var div = document.getElementById("Mardi");
+                    var hour = document.getElementById("heure_Mardi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
+            </script>
+            
+            <!-- Creer Jour Mercredi (si value de checkMercredi = check)-->
+            <input type="checkbox" value="uncheck" id="checkMercredi" onclick="activeMercredi()">
+            <label for="pwd" > Mercredi <br> </label>
+            <div id="Mercredi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Mercredi :</p>
+                <!-- Creer Heure Mercredi (si value de checkMercredi = check)-->
+                <input type="time" id="heure_Mercredi" name="heure Mercredi"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeMercredi() {
+                    var checkBox = document.getElementById("checkMercredi");
+                    var div = document.getElementById("Mercredi");
+                    var hour = document.getElementById("heure_Mercredi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-            }
-        </script>
-        
-        <!-- Creer Jour Mercredi (si value de checkMercredi = check)-->
-        <input type="checkbox" value="uncheck" id="checkMercredi" onclick="activeMercredi()">
-        <label for="pwd" > Mercredi <br> </label>
-        <div id="Mercredi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Mercredi :</p>
-            <!-- Creer Heure Mercredi (si value de checkMercredi = check)-->
-            <input type="time" id="heure_Mercredi" name="heure Mercredi"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeMercredi() {
-                var checkBox = document.getElementById("checkMercredi");
-                var div = document.getElementById("Mercredi");
-                var hour = document.getElementById("heure_Mercredi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
+            </script>
+            
+            <!-- Creer Jour Jeudi (si value de checkJeudi = check)-->
+            <input type="checkbox" value="uncheck" id="checkJeudi" onclick="activeJeudi()">
+            <label for="pwd" > Jeudi <br> </label>
+            <div id="Jeudi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Jeudi :</p>
+                <!-- Creer Heure Jeudi (si value de checkJeudi = check)-->
+                <input type="time" id="heure_Jeudi" name="heure Jeudi"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeJeudi() {
+                    var checkBox = document.getElementById("checkJeudi");
+                    var div = document.getElementById("Jeudi");
+                    var hour = document.getElementById("heure_Jeudi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
+            </script>
+            
+            <!-- Creer Jour Vendredi (si value de checkVendredi = check)-->
+            <input type="checkbox" value="uncheck" id="checkVendredi" onclick="activeVendredi()">
+            <label for="pwd" > Vendredi <br> </label>
+            <div id="Vendredi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Vendredi :</p>
+                <!-- Creer Heure Vendredi (si value de checkVendredi = check)-->
+                <input type="time" id="heure_Vendredi" name="heure Vendredi"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeVendredi() {
+                    var checkBox = document.getElementById("checkVendredi");
+                    var div = document.getElementById("Vendredi");
+                    var hour = document.getElementById("heure_Vendredi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-            }
-        </script>
-        
-        <!-- Creer Jour Jeudi (si value de checkJeudi = check)-->
-        <input type="checkbox" value="uncheck" id="checkJeudi" onclick="activeJeudi()">
-        <label for="pwd" > Jeudi <br> </label>
-        <div id="Jeudi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Jeudi :</p>
-            <!-- Creer Heure Jeudi (si value de checkJeudi = check)-->
-            <input type="time" id="heure_Jeudi" name="heure Jeudi"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeJeudi() {
-                var checkBox = document.getElementById("checkJeudi");
-                var div = document.getElementById("Jeudi");
-                var hour = document.getElementById("heure_Jeudi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
+            </script>
+            
+            <!-- Creer Jour Samedi (si value de checkSamedi = check)-->
+            <input type="checkbox" value="uncheck" id="checkSamedi" onclick="activeSamedi()">
+            <label for="pwd" > Samedi <br> </label>
+            <div id="Samedi" style="display:none">
+                <p> Choisissez une horaire pour votre café de Samedi :</p>
+                <!-- Creer Heure Samedi (si value de checkSamedi = check)-->
+                <input type="time" id="heure_Samedi" name="heure Samedi"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeSamedi() {
+                    var checkBox = document.getElementById("checkSamedi");
+                    var div = document.getElementById("Samedi");
+                    var hour = document.getElementById("heure_Samedi");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
+            </script>
+            
+            <!-- Creer Jour Dimanche (si value de checkDimanche = check)-->
+            <input type="checkbox" value="uncheck" id="checkDimanche" onclick="activeDimanche()">
+            <label for="pwd" > Dimanche <br> </label>
+            <div id="Dimanche" style="display:none">
+                <p> Choisissez une horaire pour votre café de Dimanche :</p>
+                <!-- Creer Heure Dimanche (si value de checkDimanche = check)-->
+                <input type="time" id="heure_Dimanche" name="heure Dimanche"
+                min="00:00" max="23:59" >
+            </div>
+            <br>
+            
+            <script>
+                function activeDimanche() {
+                    var checkBox = document.getElementById("checkDimanche");
+                    var div = document.getElementById("Dimanche");
+                    var hour = document.getElementById("heure_Dimanche");
+                    if (checkBox.checked == true){
+                        checkBox.value="check";
+                        div.style.display = "block";
+                        hour.required = true;
+                    }
+                    else{
+                        checkBox.value="uncheck";
+                        div.style.display = "none";
+                        hour.required = false;
+                    }
                 }
-            }
-        </script>
-        
-        <!-- Creer Jour Vendredi (si value de checkVendredi = check)-->
-        <input type="checkbox" value="uncheck" id="checkVendredi" onclick="activeVendredi()">
-        <label for="pwd" > Vendredi <br> </label>
-        <div id="Vendredi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Vendredi :</p>
-            <!-- Creer Heure Vendredi (si value de checkVendredi = check)-->
-            <input type="time" id="heure_Vendredi" name="heure Vendredi"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeVendredi() {
-                var checkBox = document.getElementById("checkVendredi");
-                var div = document.getElementById("Vendredi");
-                var hour = document.getElementById("heure_Vendredi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
-                }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
-                }
-            }
-        </script>
-        
-        <!-- Creer Jour Samedi (si value de checkSamedi = check)-->
-        <input type="checkbox" value="uncheck" id="checkSamedi" onclick="activeSamedi()">
-        <label for="pwd" > Samedi <br> </label>
-        <div id="Samedi" style="display:none">
-            <p> Choisissez une horaire pour votre café de Samedi :</p>
-            <!-- Creer Heure Samedi (si value de checkSamedi = check)-->
-            <input type="time" id="heure_Samedi" name="heure Samedi"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeSamedi() {
-                var checkBox = document.getElementById("checkSamedi");
-                var div = document.getElementById("Samedi");
-                var hour = document.getElementById("heure_Samedi");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
-                }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
-                }
-            }
-        </script>
-        
-        <!-- Creer Jour Dimanche (si value de checkDimanche = check)-->
-        <input type="checkbox" value="uncheck" id="checkDimanche" onclick="activeDimanche()">
-        <label for="pwd" > Dimanche <br> </label>
-        <div id="Dimanche" style="display:none">
-            <p> Choisissez une horaire pour votre café de Dimanche :</p>
-            <!-- Creer Heure Dimanche (si value de checkDimanche = check)-->
-            <input type="time" id="heure_Dimanche" name="heure Dimanche"
-            min="00:00" max="23:59" >
-        </div>
-        <br>
-        
-        <script>
-            function activeDimanche() {
-                var checkBox = document.getElementById("checkDimanche");
-                var div = document.getElementById("Dimanche");
-                var hour = document.getElementById("heure_Dimanche");
-                if (checkBox.checked == true){
-                    checkBox.value="check";
-                    div.style.display = "block";
-                    hour.required = true;
-                }
-                else{
-                    checkBox.value="uncheck";
-                    div.style.display = "none";
-                    hour.required = false;
-                }
-            }
-        </script>
-        
-        
-        <input class="w3-button w3-black w3-section" type="submit" value="Submit">
+            </script>
+            
+            
+            <input class="w3-button w3-black w3-section" type="submit" value="Submit">
+        </dd>
     </form>
     </div>
 
