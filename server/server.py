@@ -38,6 +38,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageRoutine.js':
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageRoutine.js","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 		elif self.path == '/pageCafe.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -115,6 +124,39 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.send_header("Content-type", "text/html")
 				self.end_headers()
 
+		elif self.path == '/GetRoutine':
+			#ouverture en lecture
+			rep = self.mysql.selectRoutine(self.path);
+			print(rep)
+			if len(rep) > 1 :
+				res = '{'
+				res += '"Routine" : ['
+				for v in rep :
+					res += v[0]
+					res += ','
+				res = res[:-1]
+				res += ']}'
+				print(res)
+			elif len(rep) == 1 :
+				res = '{'
+				res += '"Routine" : '
+				for v in rep :
+					res += v[0]
+					res += ','
+				res = res[:-1]
+				res += '}'
+				print(res)
+
+			if len(rep) > 0 :
+				self.send_response(200)
+				self.send_header("Content-type", "text/json")
+				self.end_headers()
+				self.wfile.write(bytes(str(res)+'\n', 'UTF-8'))
+			else:
+				self.send_response(404)
+				self.send_header("Content-type", "text/html")
+				self.end_headers()
+
 		else :
 			res = urllib.parse.urlparse(self.path)
 			rep = self.mysql.select(res.path)
@@ -139,9 +181,9 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 		if self.path == '/CafeInstantane':
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
-			#print(res)
+			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
-			#print(query)
+			print(query)
 			val ='1'
 			for v in query.values() :
 				if v[0] == "Grand" :
@@ -151,8 +193,17 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				else :
 					val += v[0]
 			#print(val)
-			mqtt_client.publish("home/kfee",val)
+			#mqtt_client.publish("home/kfee",val)
 
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+
+		if self.path == '/test':
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			print(query)
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -221,6 +272,12 @@ class MySQL():
 
 	def selectRecette(self,path):
 		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'nb_dose_cafe',nb_dose_cafe,'nb_dose_sucre',nb_dose_sucre,'taille',taille,'temperature',temperature) from RECETTE;"
+		# req = "SELECT id as [Recette.id], nom as [Recette.nom], nb_dose_cafe as [Recette.nb_dose_cafe], nb_dose_sucre as [Recette.nb_dose_sucre], taille as [Recette.taille], temperature as [Recette.temperature] FROM Recette FOR JSON PATH, ROOT('Recette')"
+
+		return self.c.execute(req).fetchall()
+
+	def selectRoutine(self,path):
+		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'etat', etat) from ROUTINE;"
 		# req = "SELECT id as [Recette.id], nom as [Recette.nom], nb_dose_cafe as [Recette.nb_dose_cafe], nb_dose_sucre as [Recette.nb_dose_sucre], taille as [Recette.taille], temperature as [Recette.temperature] FROM Recette FOR JSON PATH, ROOT('Recette')"
 
 		return self.c.execute(req).fetchall()

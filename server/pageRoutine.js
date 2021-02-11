@@ -1,0 +1,170 @@
+
+$.ajax({
+  url: '/GetRoutine',
+  type: 'GET',
+  dataType : 'JSON',
+  success: function(response){
+    Routine(response)
+    console.log(response);
+  },
+  error: function(error){
+    box.html("error");
+    console.log(error);
+
+}
+});
+
+
+function Routine(response) {
+  var box = $('#result');
+
+  for (var i = 0; i < response["Routine"].length ; i++) {
+
+    var optionRoutine = '<option value=' + response["Routine"][i]['nom'] + '>' + response["Routine"][i]['nom']+ '</option>';
+    document.getElementById("ShowRoutine").innerHTML += optionRoutine;
+  }
+
+  // for (var i = 0; i < response["Routine"].length ; i++) {
+  //
+  //     var chaine = "<div id = "+response["Routine"][i]["nom"] + " style='display:none;'> " ;
+  //     chaine += "<ul> <li> Nombre de dose de café : " + response["Routine"][i]['nb_dose_cafe']+ '</li>';
+  //     chaine += "<li>Température : " + response["Routine"][i]['temperature']+ '</li></ul></div>';
+  //     document.getElementById("result").innerHTML += chaine;
+  //
+  //
+  // }
+}
+
+// function AfficheRoutine() {
+//   var selectElmt = document.getElementById("ShowRoutine");
+//   var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+//
+//   for ( var v = 1 ; v < selectElmt.length; v++) {
+//
+//     var valeur = selectElmt.options[v].value;
+//     var div = document.getElementById(valeur)
+//
+//
+//     if ( valeur == valeurselectionnee) {
+//       if (div.style.display == "none") {
+//         div.style.display = "block";
+//       }
+//     }
+//     else if  (div.style.display == "block") {
+//       div.style.display = "none";
+//     }
+//   }
+//
+// }
+
+function activeLundi() {
+    var checkBox = document.getElementById("checkLundi");
+    var div = document.getElementById("Lundi");
+    var hour = document.getElementById("heure_Lundi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required= true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeMardi() {
+    var checkBox = document.getElementById("checkMardi");
+    var div = document.getElementById("Mardi");
+    var hour = document.getElementById("heure_Mardi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeMercredi() {
+    var checkBox = document.getElementById("checkMercredi");
+    var div = document.getElementById("Mercredi");
+    var hour = document.getElementById("heure_Mercredi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeJeudi() {
+    var checkBox = document.getElementById("checkJeudi");
+    var div = document.getElementById("Jeudi");
+    var hour = document.getElementById("heure_Jeudi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeVendredi() {
+    var checkBox = document.getElementById("checkVendredi");
+    var div = document.getElementById("Vendredi");
+    var hour = document.getElementById("heure_Vendredi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeSamedi() {
+    var checkBox = document.getElementById("checkSamedi");
+    var div = document.getElementById("Samedi");
+    var hour = document.getElementById("heure_Samedi");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}
+
+function activeDimanche() {
+    var checkBox = document.getElementById("checkDimanche");
+    var div = document.getElementById("Dimanche");
+    var hour = document.getElementById("heure_Dimanche");
+    if (checkBox.checked == true){
+        checkBox.value="check";
+        div.style.display = "block";
+        hour.required = true;
+    }
+    else{
+        checkBox.value="uncheck";
+        div.style.display = "none";
+        hour.required = false;
+    }
+}

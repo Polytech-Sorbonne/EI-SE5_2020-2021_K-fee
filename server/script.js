@@ -15,6 +15,7 @@ $.ajax({
 });
 
 
+
 function Recette(response) {
   var box = $('#result');
 
@@ -57,10 +58,4 @@ function AfficheRecette() {
     }
   }
 
-}
-
-function pageRecette() {
-  var site = "http://localhost:8000/pageRecette.html";
-  var win = window.open(site, '_blank');
-  win.focus();
 }
