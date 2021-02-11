@@ -65,6 +65,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageChargAddRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargAddRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 		elif self.path == '/pageRecette.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -139,12 +148,20 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 
-		elif self.path == '/Recette':
+		elif self.path == '/pageChargAddRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargAddRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+			
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
-			self.mysql.insert(self.path,query);
+			self.mysql.insert('/Recette',query);
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
