@@ -30,7 +30,7 @@
 <div class="w3-container w3-padding-32" id="add">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
     <a href="#NouveauCafe" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouveau </b>Café</a>
-    <a id="CafeRecette" href="#CafeInstantRecette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
+    <a href="#CafeRecette" class="w3-bar-item w3-button" style =" width:50% ;"><b>A partir </b>d'une Recette</a>
   </div>
 
 <!-- Nouveau café -->
@@ -74,20 +74,23 @@
 
   <!-- A partir d'une recette -->
     <div class="w3-container w3-padding-32" id="CafeRecette">
+
       <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-book"></i>A partir d'une recette existante </h3>
       <p>Dans cette section vous pouvez selectionner la recette de votre choix pour faire un café immédiatement. </p>
       <input type="checkbox" id="CafeInstantRecette">
       <span>Voulez vous faire un café à partir d'une recette existante ? (Si oui Veuillez cocher) </span>
       <br><br>
 
-      <form action="CafeInstantaneRecette" method="post">
-        <p id ="result"></p>
+
+      <form action="ajoutSelect" method="post">
+
         <label for="cafe"> Choisissez une recette existante :</label>
-        <select name="Recette" id="Recette">
-          <option value="Petit">Petit</option>
-          <option value="Grand">Grand</option>
+        <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
+          <option value="">--Please choose an option--</option>
         </select>
 
+        <div id = "result"> </div>
+        <div id = "result2"> </div>
         <br><br>
         <input class="w3-button w3-black w3-section" type="submit" value="Submit">
       </form>
