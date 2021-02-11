@@ -47,7 +47,7 @@ void setup_VL53L0X()
   sensor.setTimeout(500);
   if (!sensor.init())
   {
-    Serial.println("Failed to detect and initialize sensor!");
+    Serial.println("Failed to detect and initialize sensor 1!");
     while (1) {}
   }
 
@@ -56,7 +56,7 @@ void setup_VL53L0X()
   sensor2.setTimeout(500);
   if (!sensor2.init())
   {
-    Serial.println("Failed to detect and initialize sensor!");
+    Serial.println("Failed to detect and initialize sensor 2!");
     while (1) {}
   }
 #if defined LONG_RANGE
@@ -85,11 +85,11 @@ void loop_VL53L0X()
   Serial.println();
 }
 
-uint8_t get_distance(){
+uint8_t get_qtt_cafe(){
   return sensor.readRangeSingleMillimeters();
 }
 
-uint8_t get_distance2(){
+uint8_t get_qtt_sucre(){
   return sensor2.readRangeSingleMillimeters();
 }
 

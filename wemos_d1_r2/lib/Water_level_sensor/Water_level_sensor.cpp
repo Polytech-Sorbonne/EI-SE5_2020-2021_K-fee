@@ -182,3 +182,8 @@ uint8_t get_water_level(){
     // delay(1000);
     return trig_section * 5;
 }
+
+void setup_water_level(){
+  Serial.begin(115200);
+  Wire.begin();
+}

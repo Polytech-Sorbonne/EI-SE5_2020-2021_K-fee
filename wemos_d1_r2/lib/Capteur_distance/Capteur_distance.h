@@ -8,7 +8,7 @@
 
 void setup_VL53L0X();
 void loop_VL53L0X();
-uint8_t get_distance();
-uint8_t get_distance2();
+uint8_t get_qtt_cafe();
+uint8_t get_qtt_sucre();
 
 #endif

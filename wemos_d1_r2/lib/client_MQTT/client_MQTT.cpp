@@ -1,5 +1,7 @@
 
 #include "client_MQTT.h"
+#include "Water_level_sensor.h"
+#include "Capteur_distance.h"
 
 char ssid[] = "S20+";
 char password[] = "12345678abc";
@@ -12,7 +14,6 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setup_wifi() {
-
   delay(10);
   // We start by connecting to a WiFi network
   Serial.println();
@@ -25,11 +26,13 @@ void setup_wifi() {
     delay(500);
     Serial.print(".");
   }
-  randomSeed(micros());
+  delay(500);
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
+  delay(500);
   Serial.println(WiFi.localIP());
+  delay(500);
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -60,44 +63,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
   else{
     Serial.print("preparation inconnu\n");
   }
-  char monitoring[60];
-  float rand_cafe_qtt = random(100);
-  float rand_the_qtt = random(100);
-  float rand_chocolat_qtt = random(100);
-  float rand_sucre_qtt = random(100);
-
-  sprintf(monitoring,"Reservoirs : cafe : %.0f%% ",rand_cafe_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : the : %.0f%% ",rand_the_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : chocolat : %.0f%% ",rand_chocolat_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : sucre : %.0f%% ",rand_sucre_qtt);
-  client.publish("Monitoring", monitoring);
-  Serial.print("Fin monitoring\n");
 }
 
 void monitoring(){
   Serial.print("Debut monitoring\n");
   char monitoring[60];
-  float rand_cafe_qtt = random(100);
-  float rand_the_qtt = random(100);
-  float rand_chocolat_qtt = random(100);
-  float rand_sucre_qtt = random(100);
 
-  sprintf(monitoring,"Reservoirs : cafe : %.0f%% ",rand_cafe_qtt);
+  int qtt_cafe = (int)get_qtt_cafe();
+  int qtt_sucre = (int)get_qtt_sucre();
+  int water_level = (int)get_water_level();
+
+  sprintf(monitoring,"Reservoirs : cafe : %d%%\n",qtt_cafe);
+  Serial.print(monitoring);
   client.publish("Monitoring", monitoring);
 
-  sprintf(monitoring,"Reservoirs : the : %.0f%% ",rand_the_qtt);
+  sprintf(monitoring,"Reservoirs : sucre : %d%%\n",qtt_sucre);
+  Serial.print(monitoring);
   client.publish("Monitoring", monitoring);
 
-  sprintf(monitoring,"Reservoirs : chocolat : %.0f%% ",rand_chocolat_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : sucre : %.0f%% ",rand_sucre_qtt);
+  sprintf(monitoring,"Reservoirs : eau : %d%%\n",water_level);
+  Serial.print(monitoring);
   client.publish("Monitoring", monitoring);
 }
 
@@ -189,12 +174,11 @@ void reconnect() {
 }
 
 void setup_pub_sub() {
-  pinMode(16, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  Serial.begin(115200);
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
-  randomSeed(analogRead(0));
+Serial.begin(115200);
+setup_wifi();
+client.setServer(mqtt_server, 1883);
+client.setCallback(callback);
+randomSeed(analogRead(0));
 }
 
 void loop_pub_sub() {
@@ -202,5 +186,6 @@ void loop_pub_sub() {
   if (!client.connected()) {
     reconnect();
   }
+  monitoring();
   client.loop();
 }
