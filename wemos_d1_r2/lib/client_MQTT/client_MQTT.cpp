@@ -52,41 +52,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Preparation cafe \n");
 
     Serial.print("Dose de cafe : ");
-    dose_cafe(dose[1]);
+    ajout_cafe(dose[1]);
     
     Serial.print("\nDose de sucre : ");
-    dose_sucre(dose[2]);
+    ajout_sucre(dose[2]);
    
     Serial.print("\nTaille Cafe : ");
-    taille_cafe(dose[3]);
+    ajout_eau(dose[3]);
   }
   else{
     Serial.print("preparation inconnu\n");
   }
 }
 
-void monitoring(){
-  Serial.print("Debut monitoring\n");
-  char monitoring[60];
 
-  int qtt_cafe = (int)get_qtt_cafe();
-  int qtt_sucre = (int)get_qtt_sucre();
-  int water_level = (int)get_water_level();
-
-  sprintf(monitoring,"Reservoirs : cafe : %d%%\n",qtt_cafe);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : sucre : %d%%\n",qtt_sucre);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : eau : %d%%\n",water_level);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-}
-
-void dose_cafe(char dose){
+void ajout_cafe(char dose){
 if(dose == '1'){
     Serial.print("1 rotation dose cafe");
   }
@@ -105,7 +85,7 @@ else{
 
 }
 
-void dose_sucre(char dose){
+void ajout_sucre(char dose){
 if(dose == '1'){
     Serial.print("1 rotation dose sucre");
   }
@@ -123,30 +103,6 @@ else{
   }
 }
 
-void taille_cafe(char dose){
-if(dose == '1'){
-  Serial.print("Petit Cafe\n");
-  Serial.print("Eau chaude en cours  \n");
-  delay(TEMPS_ATTENTE);
-  digitalWrite(16, HIGH);
-  delay(TEMPS_CAFE_PETIT);
-  digitalWrite(16, LOW);
-  Serial.print("Fin eau chaude\n");
-}
-
-else if(dose == '2'){
-  Serial.print("Grand Cafe\n");
-  Serial.print("Eau chaude en cours  \n");
-  delay(TEMPS_ATTENTE);
-  digitalWrite(16, HIGH);
-  delay(TEMPS_CAFE_GRAND);
-  digitalWrite(16, LOW);
-  Serial.print("Fin eau chaude\n");
-}
-else{
-  Serial.print("Taille tasse inconnu\n");
-}
-}
 
 void reconnect() {
   // Loop until we're reconnected
@@ -181,11 +137,11 @@ client.setCallback(callback);
 randomSeed(analogRead(0));
 }
 
-void loop_pub_sub() {
+// void loop_pub_sub() {
 
-  if (!client.connected()) {
-    reconnect();
-  }
-  monitoring();
-  client.loop();
-}
+//   if (!client.connected()) {
+//     reconnect();
+//   }
+//   monitoring();
+//   client.loop();
+// }
