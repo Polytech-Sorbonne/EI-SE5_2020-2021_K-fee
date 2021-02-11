@@ -161,9 +161,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
-			self.mysql.insert('/Recette',query);
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
+			self.mysql.insert('/Recette',query)
 			self.end_headers()
 
 		elif self.path == '/supprRecette':
