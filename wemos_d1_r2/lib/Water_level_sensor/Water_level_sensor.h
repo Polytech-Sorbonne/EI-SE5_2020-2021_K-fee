@@ -21,5 +21,6 @@ void getHigh12SectionValue(void);
 void getLow8SectionValue(void);
 void check();
 uint8_t get_water_level();
+void setup_water_level();
 
 #endif
