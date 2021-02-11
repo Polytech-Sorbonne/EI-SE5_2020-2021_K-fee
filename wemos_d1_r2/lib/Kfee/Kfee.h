@@ -53,25 +53,51 @@ class Kfee {
 
     public :
 
+        //Constructeur
         Kfee();
+
+        //Setup les capteurs WaterLevel, ainsi que les capteurs de distances
         int setup_i2c_sensors();
+        //Setup la pin du sensor de proximité
         void setup_prox_sensor();
+        //Setup la vitesse des moteurs
         void setup_motors();
+        //Fonction permettant de mettre nb doses de café dans la tasse
         void putCoffee(int nb);
+        //Fonction permettant de mettre nb dose de sucre dans la tasse
         void putSugar(int nb);
+        //Remplissage de la tasse selon la taille 1 -> petit, 2 -> grand
         void putWater(int taille);
+        //Sensor du niveau d'eau restant
         int getWaterLevelPercent();
+        //Quantité du reservoir du café en pourcentage
         int getCoffeeQuantity();
+        //Quantité du reservoir de sucre en pourcentage
         int getSugarQuantity();
+        //Application
         int run();
+        //Envoi les données des sensors au serveur web
         void monitoring();
+        //Fonction d'acquittement
         void acknowledgement();
+        //Renvoi True ou False si il y a une tasse
         int presenceTasse();
+        
+        //FONCTIONS DE TESTS
+
+        //test le capteur de niveau d'eau
         void test_water_level();
+        //test le capteur de proximité
         void test_capteur_prox();
+        //test les capteurs de distance
         void test_capteur_distance();
+        //test la communication mqtt avec le server 
         void test_MQTT();
+        //test la rotation des moteurs
         void test_motors();
+        //Effectue une vidange par la chauffe :
+        //taille correspond a la taille du receptacle.
+        //Effectue nb remplissage pour vider la cafetiere
         void test_water_emptying(int taille);
        
         
