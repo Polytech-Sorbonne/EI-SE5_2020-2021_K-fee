@@ -83,6 +83,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageChargSupRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
@@ -164,15 +173,22 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.mysql.insert('/Recette',query)
 			self.end_headers()
 
-		elif self.path == '/supprRecette':
+		elif self.path == '/pageChargSupRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
 			self.mysql.deleteRecette(self.path,query)
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
 			self.end_headers()
+
 
 
 		else:
