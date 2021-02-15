@@ -1,15 +1,15 @@
 #include <Arduino.h>
-#include <Kfee.h>
-
-Kfee k;
+#include <client_MQTT.h>
 
 void setup() { 
-  k.setup_i2c_sensors();
-  Serial.begin(115200);
+  k.init();
+  setup_pub_sub();
 }
 
 void loop() {
-  k.test_water_emptying(1);
+  
+  loop_pub_sub();
+  
 }
 
 

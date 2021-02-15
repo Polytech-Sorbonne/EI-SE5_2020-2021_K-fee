@@ -47,8 +47,6 @@ class Kfee {
         Stepper sugarMotor;
         VL53L0X coffee_sensor;
         VL53L0X sugar_sensor;
-        WiFiClient espClient;
-        PubSubClient client;
 
 
     public :
@@ -56,12 +54,19 @@ class Kfee {
         //Constructeur
         Kfee();
 
+        void init();
         //Setup les capteurs WaterLevel, ainsi que les capteurs de distances
         int setup_i2c_sensors();
         //Setup la pin du sensor de proximité
         void setup_prox_sensor();
+        //Setup la pin du relay
+        void setup_relay();
         //Setup la vitesse des moteurs
         void setup_motors();
+        //Setup le mqtt client
+        void setup_pub_sub();
+        //Setup wifi
+        void setup_wifi();
         //Fonction permettant de mettre nb doses de café dans la tasse
         void putCoffee(int nb);
         //Fonction permettant de mettre nb dose de sucre dans la tasse
@@ -75,13 +80,17 @@ class Kfee {
         //Quantité du reservoir de sucre en pourcentage
         int getSugarQuantity();
         //Application
-        int run();
+        void callback(char* topic, uint8_t* payload, unsigned int length);
+        
+        void reconnect();
         //Envoi les données des sensors au serveur web
         void monitoring();
         //Fonction d'acquittement
         void acknowledgement();
         //Renvoi True ou False si il y a une tasse
         int presenceTasse();
+        //Run client loop
+        void run();
         
         //FONCTIONS DE TESTS
 

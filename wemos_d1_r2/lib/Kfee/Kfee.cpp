@@ -12,6 +12,13 @@ int Kfee::setup_i2c_sensors(){
     return 0;    
 }
 
+void Kfee::init(){
+    setup_i2c_sensors();
+    setup_prox_sensor();
+    setup_relay();
+    setup_motors();
+}
+
 void Kfee::setup_prox_sensor(){
     pinMode(PROX, INPUT);
 }
@@ -19,6 +26,9 @@ void Kfee::setup_prox_sensor(){
 void Kfee::setup_motors(){
     coffeeMotor.setSpeed(COFFEE_MOTOR_SPEED);
     sugarMotor.setSpeed(SUGAR_MOTOR_SPEED);
+}
+void Kfee::setup_relay(){
+    pinMode(RELAY, OUTPUT);
 }
 
 void Kfee::putCoffee(int nb){
@@ -39,31 +49,6 @@ int Kfee::getCoffeeQuantity(){
 
 int Kfee::getSugarQuantity(){
     return (int)(100 - (get_qtt_cafe(sugar_sensor) * RESERVE_EMPTY / 100));
-}
-
-void Kfee::monitoring(){
-  Serial.print("Debut monitoring\n");
-  char monitoring[60];
-
-  int qtt_cafe = getCoffeeQuantity();
-  int qtt_sucre = getSugarQuantity();
-  int water_level = getWaterLevelPercent();
-
-  sprintf(monitoring,"Reservoirs : cafe : %d%%\n",qtt_cafe);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : sucre : %d%%\n",qtt_sucre);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : eau : %d%%\n",water_level);
-  Serial.print(monitoring);
-  client.publish("Monitoring", monitoring);
-}
-
-void Kfee::acknowledgement(){
-    client.publish("Ack", "1");
 }
 
 int Kfee::presenceTasse(){
@@ -111,12 +96,14 @@ void Kfee::putWater(int taille){
     Serial.println("Relay Off");
 }
 
+
 void Kfee::test_water_emptying(int taille){
     Serial.println("Start !");
     Serial.printf("First Water Level : %d%%\n", getWaterLevelPercent());
-    while(getWaterLevelPercent() != 0){
-        delay(TEMPS_ATTENTE);
+    while(getWaterLevelPercent() > 12){
+        delay(TEMPS_ATTENTE * 3);
         putWater(taille);
         Serial.printf("Niveau d'eau : %d%%\n", getWaterLevelPercent());
     }
+    return;
 }
