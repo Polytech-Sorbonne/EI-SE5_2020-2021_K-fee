@@ -47,6 +47,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageRoutine.js':
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageRoutine.js","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 		elif self.path == '/pageCafe.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -92,6 +101,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageChargSupRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
@@ -105,6 +123,39 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			res = res[:-1]
 			res += ']}'
 			#print(res)
+			if len(rep) > 0 :
+				self.send_response(200)
+				self.send_header("Content-type", "text/json")
+				self.end_headers()
+				self.wfile.write(bytes(str(res)+'\n', 'UTF-8'))
+			else:
+				self.send_response(404)
+				self.send_header("Content-type", "text/html")
+				self.end_headers()
+
+		elif self.path == '/GetRoutine':
+			#ouverture en lecture
+			rep = self.mysql.selectRoutine(self.path);
+			print(rep)
+			if len(rep) > 1 :
+				res = '{'
+				res += '"Routine" : ['
+				for v in rep :
+					res += v[0]
+					res += ','
+				res = res[:-1]
+				res += ']}'
+				print(res)
+			elif len(rep) == 1 :
+				res = '{'
+				res += '"Routine" : '
+				for v in rep :
+					res += v[0]
+					res += ','
+				res = res[:-1]
+				res += '}'
+				print(res)
+
 			if len(rep) > 0 :
 				self.send_response(200)
 				self.send_header("Content-type", "text/json")
@@ -139,9 +190,9 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 		if self.path == '/CafeInstantane':
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
-			#print(res)
+			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
-			#print(query)
+			print(query)
 			val ='1'
 			for v in query.values() :
 				if v[0] == "Grand" :
@@ -151,7 +202,43 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				else :
 					val += v[0]
 			#print(val)
-			mqtt_client.publish("home/kfee",val)
+			#mqtt_client.publish("home/kfee",val)
+
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+
+		if self.path == '/test':
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			#print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			#print(query)
+			dict = {}
+			for key in query :
+				if query[key] != [''] :
+					dict[key] = query[key]
+			print(dict)
+
+			#######	Ajout d'une routine #######
+			self.mysql.insertRoutine(dict['nom'])
+
+			#######	Lundi #######
+			if 'Lundi' in dict :
+				self.mysql.insertJour('Lundi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteLundi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+
+
+
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -165,7 +252,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageChargAddRecette.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-			
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
@@ -173,16 +260,21 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.mysql.insert('/Recette',query)
 			self.end_headers()
 
-		elif self.path == '/supprRecette':
+		elif self.path == '/pageChargSupRecette.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
 			self.mysql.deleteRecette(self.path,query)
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
 			self.end_headers()
-
 
 		else:
 			res = urllib.parse.urlparse(self.path)
@@ -218,6 +310,26 @@ class MySQL():
 
 		return self.c.execute(req).fetchall()
 
+	def selectRoutine(self,path):
+		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'etat', etat) from ROUTINE;"
+		return self.c.execute(req).fetchall()
+
+	def selectRoutineID(self):
+		req = "select MAX(id) FROM Routine"
+		return self.c.execute(req).fetchall()
+
+	def selectJourID(self):
+		req = "select MAX(id) FROM Jour"
+		return self.c.execute(req).fetchall()
+
+	def selectHeureID(self):
+		req = "select MAX(id) FROM Heure"
+		return self.c.execute(req).fetchall()
+
+	def selectRecetteID(self,nom):
+		req = "select id from Recette where nom='%s'" %(nom[0])
+		return self.c.execute(req).fetchall()
+
 
 	def insert(self,path,query):
 		print(query)
@@ -229,10 +341,30 @@ class MySQL():
 		self.c.execute(req)
 		self.conn.commit()
 
+	def insertRoutine(self,nom):
+		req = "insert into Routine (nom,etat) values ('%s','inactif')" %(nom[0])
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+	def insertJour(self,nom):
+		req = "insert into Jour (nom) values ('%s')" %(nom)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+	def insertHeure(self,time):
+		heure = time[0].split(':')[0]
+		minute = time[0].split(':')[1]
+		req = "insert into Heure (heure, minute) values (%s,%s)" %(heure,minute)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
 	def insertPossede(self,path,id1,id2):
-		val = '%s,%s'%(id1,id2)
-		print(val)
-		req = "insert into %s values (%s)" %(path.split('/')[1], val)
+
+		val = '%s,%s'%(id1[0],id2[0])
+		req = "insert into %s values (%s)" %(path, val)
 		print(req)
 		self.c.execute(req)
 		self.conn.commit()
