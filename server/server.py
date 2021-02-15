@@ -37,6 +37,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("script.js","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+		
+		elif self.path == '/pageRoutine.js':
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageRoutine.js","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/pageCafe.html':
 			self.send_response(200)

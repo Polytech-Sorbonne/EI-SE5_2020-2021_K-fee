@@ -15,13 +15,15 @@ $.ajax({
 });
 
 
+
 function Recette(response) {
-  var box = $('#result');
+  //var box = $('#result');
 
   for (var i = 0; i < response["Recette"].length ; i++) {
 
     var optionRecette = '<option value=' + response["Recette"][i]['nom'] + '>' + response["Recette"][i]['nom']+ '</option>';
     document.getElementById("ajoutSelect").innerHTML += optionRecette;
+
   }
 
   for (var i = 0; i < response["Recette"].length ; i++) {
@@ -32,7 +34,6 @@ function Recette(response) {
       chaine += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
       chaine += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
       document.getElementById("result").innerHTML += chaine;
-
 
   }
 }
@@ -57,10 +58,4 @@ function AfficheRecette() {
     }
   }
 
-}
-
-function pageRecette() {
-  var site = "http://localhost:8000/pageRecette.html";
-  var win = window.open(site, '_blank');
-  win.focus();
 }
