@@ -201,9 +201,36 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 		if self.path == '/test':
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
-			print(res)
+			#print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
-			print(query)
+			#print(query)
+			dict = {}
+			for key in query :
+				if query[key] != [''] :
+					dict[key] = query[key]
+			print(dict)
+
+			#######	Ajout d'une routine #######
+			self.mysql.insertRoutine(dict['nom'])
+
+			#######	Lundi #######
+			if 'Lundi' in dict :
+				self.mysql.insertJour('Lundi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteLundi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+
+
+
+
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -239,8 +266,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			print(query)
 			self.mysql.deleteRecette(self.path,query)
 			self.end_headers()
-
-
 
 		else:
 			res = urllib.parse.urlparse(self.path)
@@ -278,8 +303,22 @@ class MySQL():
 
 	def selectRoutine(self,path):
 		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'etat', etat) from ROUTINE;"
-		# req = "SELECT id as [Recette.id], nom as [Recette.nom], nb_dose_cafe as [Recette.nb_dose_cafe], nb_dose_sucre as [Recette.nb_dose_sucre], taille as [Recette.taille], temperature as [Recette.temperature] FROM Recette FOR JSON PATH, ROOT('Recette')"
+		return self.c.execute(req).fetchall()
 
+	def selectRoutineID(self):
+		req = "select MAX(id) FROM Routine"
+		return self.c.execute(req).fetchall()
+
+	def selectJourID(self):
+		req = "select MAX(id) FROM Jour"
+		return self.c.execute(req).fetchall()
+
+	def selectHeureID(self):
+		req = "select MAX(id) FROM Heure"
+		return self.c.execute(req).fetchall()
+
+	def selectRecetteID(self,nom):
+		req = "select id from Recette where nom='%s'" %(nom[0])
 		return self.c.execute(req).fetchall()
 
 
@@ -293,10 +332,30 @@ class MySQL():
 		self.c.execute(req)
 		self.conn.commit()
 
+	def insertRoutine(self,nom):
+		req = "insert into Routine (nom,etat) values ('%s','inactif')" %(nom[0])
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+	def insertJour(self,nom):
+		req = "insert into Jour (nom) values ('%s')" %(nom)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+	def insertHeure(self,time):
+		heure = time[0].split(':')[0]
+		minute = time[0].split(':')[1]
+		req = "insert into Heure (heure, minute) values (%s,%s)" %(heure,minute)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
 	def insertPossede(self,path,id1,id2):
-		val = '%s,%s'%(id1,id2)
-		print(val)
-		req = "insert into %s values (%s)" %(path.split('/')[1], val)
+
+		val = '%s,%s'%(id1[0],id2[0])
+		req = "insert into %s values (%s)" %(path, val)
 		print(req)
 		self.c.execute(req)
 		self.conn.commit()

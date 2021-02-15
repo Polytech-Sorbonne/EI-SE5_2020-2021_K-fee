@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="pageRoutine.js"></script>
-  <script src="script.js"></script>
+
 </head>
 
 <!-- Header -->
@@ -57,13 +57,13 @@
         <div id="Lundi" style="display:none">
             <p> Choisissez une horaire pour votre café de Lundi :</p>
             <!-- Creer Heure lundi (si value de checkLundi = check)-->
-            <input type="time" id="heure_Lundi" name="heure Lundi"
+            <input type="time" id="heure_Lundi" name="heureLundi"
             min="00:00" max="23:59" >
             <br><br>
-            <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
+            <select name="RecetteLundi" id ="ajoutRecetteLundi" onchange="AfficheRecette()" >
               <option value="">--Please choose an option--</option>
             </select>
-            <div id = "result"> </div>
+            <div id = "RecetteLundi"> </div>
 
             <div id = "result2"> </div>
 
@@ -76,8 +76,16 @@
         <div id="Mardi" style="display:none">
             <p> Choisissez une horaire pour votre café de Mardi :</p>
             <!-- Creer Heure Mardi (si value de checkMardi = check)-->
-            <input type="time" id="heure_Mardi" name="heure Mardi"
+            <input type="time" id="heure_Mardi" name="heureMardi"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteMardi" id ="ajoutRecetteMardi" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteMardi"> </div>
+
+            <div id = "result2"> </div>
         </div>
         <br>
 
@@ -88,8 +96,16 @@
         <div id="Mercredi" style="display:none">
             <p> Choisissez une horaire pour votre café de Mercredi :</p>
             <!-- Creer Heure Mercredi (si value de checkMercredi = check)-->
-            <input type="time" id="heure_Mercredi" name="heure Mercredi"
+            <input type="time" id="heure_Mercredi" name="heureMercredi"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteMercredi" id ="ajoutRecetteMercredi" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteMercredi"> </div>
+
+            <div id = "result2"> </div>
         </div>
         <br>
 
@@ -99,8 +115,17 @@
         <div id="Jeudi" style="display:none">
             <p> Choisissez une horaire pour votre café de Jeudi :</p>
             <!-- Creer Heure Jeudi (si value de checkJeudi = check)-->
-            <input type="time" id="heure_Jeudi" name="heure Jeudi"
+            <input type="time" id="heure_Jeudi" name="heureJeudi"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteJeudi" id ="ajoutRecetteJeudi" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteJeudi"> </div>
+
+            <div id = "result2"> </div>
+
         </div>
         <br>
 
@@ -111,8 +136,17 @@
         <div id="Vendredi" style="display:none">
             <p> Choisissez une horaire pour votre café de Vendredi :</p>
             <!-- Creer Heure Vendredi (si value de checkVendredi = check)-->
-            <input type="time" id="heure_Vendredi" name="heure Vendredi"
+            <input type="time" id="heure_Vendredi" name="heureVendredi"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteVendredi" id ="ajoutRecetteVendredi" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteVendredi"> </div>
+
+            <div id = "result2"> </div>
+
         </div>
         <br>
 
@@ -123,8 +157,16 @@
         <div id="Samedi" style="display:none">
             <p> Choisissez une horaire pour votre café de Samedi :</p>
             <!-- Creer Heure Samedi (si value de checkSamedi = check)-->
-            <input type="time" id="heure_Samedi" name="heure Samedi"
+            <input type="time" id="heure_Samedi" name="heureSamedi"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteSamedi" id ="ajoutRecetteSamedi" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteSamedi"> </div>
+
+            <div id = "result2"> </div>
         </div>
         <br>
 
@@ -136,8 +178,16 @@
         <div id="Dimanche" style="display:none">
             <p> Choisissez une horaire pour votre café de Dimanche :</p>
             <!-- Creer Heure Dimanche (si value de checkDimanche = check)-->
-            <input type="time" id="heure_Dimanche" name="heure Dimanche"
+            <input type="time" id="heure_Dimanche" name="heureDimanche"
             min="00:00" max="23:59" >
+
+            <br><br>
+            <select name="RecetteDimanche" id ="ajoutRecetteDimanche" onchange="AfficheRecette()" >
+              <option value="">--Please choose an option--</option>
+            </select>
+            <div id = "RecetteDimanche"> </div>
+
+            <div id = "result2"> </div>
         </div>
         <br>
 
@@ -158,7 +208,7 @@
           <option value="">--Please choose an option--</option>
         </select>
 
-        <div id = "result"> </div>
+        <div id = "resultRoutine"> </div>
 
         <div id = "result2"> </div>
 

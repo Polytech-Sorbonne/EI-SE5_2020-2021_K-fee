@@ -151,7 +151,7 @@ function activeLundi() {
     var div = document.getElementById("Lundi");
     var hour = document.getElementById("heure_Lundi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="lundi";
         div.style.display = "block";
         hour.required= true;
     }
@@ -167,7 +167,7 @@ function activeMardi() {
     var div = document.getElementById("Mardi");
     var hour = document.getElementById("heure_Mardi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Mardi";
         div.style.display = "block";
         hour.required = true;
     }
@@ -183,7 +183,7 @@ function activeMercredi() {
     var div = document.getElementById("Mercredi");
     var hour = document.getElementById("heure_Mercredi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Mercredi";
         div.style.display = "block";
         hour.required = true;
     }
@@ -199,7 +199,7 @@ function activeJeudi() {
     var div = document.getElementById("Jeudi");
     var hour = document.getElementById("heure_Jeudi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Jeudi";
         div.style.display = "block";
         hour.required = true;
     }
@@ -215,7 +215,7 @@ function activeVendredi() {
     var div = document.getElementById("Vendredi");
     var hour = document.getElementById("heure_Vendredi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Vendredi";
         div.style.display = "block";
         hour.required = true;
     }
@@ -231,7 +231,7 @@ function activeSamedi() {
     var div = document.getElementById("Samedi");
     var hour = document.getElementById("heure_Samedi");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Samedi";
         div.style.display = "block";
         hour.required = true;
     }
@@ -247,7 +247,7 @@ function activeDimanche() {
     var div = document.getElementById("Dimanche");
     var hour = document.getElementById("heure_Dimanche");
     if (checkBox.checked == true){
-        checkBox.value="check";
+        checkBox.value="Dimanche";
         div.style.display = "block";
         hour.required = true;
     }
