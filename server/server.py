@@ -37,15 +37,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("script.js","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-		
-		elif self.path == '/pageRoutine.js':
-			self.send_response(200)
-			self.send_header("Content-type", "text/js")
-			self.end_headers()
-			#ouverture en lecture
-			f = open("pageRoutine.js","r") #lecture
-			s = f.read()
-			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/pageRoutine.js':
 			self.send_response(200)
@@ -202,13 +193,21 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				else :
 					val += v[0]
 			#print(val)
-			#mqtt_client.publish("home/kfee",val)
+			mqtt_client.publish("home/kfee",val)
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 
-		if self.path == '/test':
+		if self.path == '/pageChargAddRoutine.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargAddRoutine.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			#print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
@@ -235,7 +234,89 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 				id2 = self.mysql.selectRecetteID(dict['RecetteLundi'])
 				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+			#######	Mardi #######
+			if 'Mardi' in dict :
+				self.mysql.insertJour('Mardi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
 
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteMardi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Mercredi #######
+			if 'Mercredi' in dict :
+				self.mysql.insertJour('Mercredi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteMercredi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Jeudi #######
+			if 'Jeudi' in dict :
+				self.mysql.insertJour('Jeudi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteJeudi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Vendredi #######
+			if 'Vendredi' in dict :
+				self.mysql.insertJour('Vendredi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteVendredi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Samedi #######
+			if 'Samedi' in dict :
+				self.mysql.insertJour('Samedi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteSamedi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Samedi #######
+			if 'Dimanche' in dict :
+				self.mysql.insertJour('Dimanche')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteDimanche'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
 
 
 
@@ -274,6 +355,22 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
 			self.mysql.deleteRecette(self.path,query)
+			self.end_headers()
+
+		elif self.path == '/pageChargSupRoutine.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRoutine.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			print(query)
+			self.mysql.deleteRoutine(self.path,query)
 			self.end_headers()
 
 		else:
@@ -378,6 +475,67 @@ class MySQL():
 		self.c.execute(req)
 		self.conn.commit()
 
+	def deleteRoutine(self,path,query):
+		print(query)
+		val = ', '.join('"%s"' %v[0] for v in query.values())
+		print(val)
+		#Recupérer l'ID de la Routine à supprimer
+		idRoutine = "SELECT id FROM Routine where nom =  (%s)" %(val)
+		print(idRoutine)
+		idRoutine = self.c.execute(idRoutine).fetchall()
+		idRoutine = idRoutine[0][0]
+		print(idRoutine)
+
+		#Recupérer l'ID des Jours à supprimer
+		idJour = "SELECT idJour FROM Possede_RoutineJour where idRoutine =  (%s)" %(idRoutine)
+		print(idJour)
+		idJour = self.c.execute(idJour).fetchall()
+		idJour = idJour[:][0]
+		print(idJour)
+
+		#Recupérer l'ID des heures à supprimer
+		idHeure = "SELECT idHeure FROM Possede_JourHeure where idJour =  (%s)" %(idJour)
+		print(idHeure)
+		idHeure = self.c.execute(idHeure).fetchall()
+		idHeure = idHeure[0][0]
+		print(idHeure)
+
+		#Supprimer Possede_HeureRecette
+		req = "DELETE FROM Possede_HeureRecette where idHeure =  (%s)" %(idHeure)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Possede_JourHeure
+		req = "DELETE FROM Possede_JourHeure where idJour =  (%s)" %(idJour)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Heure
+		req = "DELETE FROM Heure where id =  (%s)" %(idHeure)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Possede_RoutineJour
+		req = "DELETE FROM Possede_RoutineJour where idRoutine =  (%s)" %(idRoutine)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Jour
+		req = "DELETE FROM Jour where id =  (%s)" %(idJour)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer la Routine
+		req = "DELETE FROM Routine where nom =  (%s)" %(val)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
 
 
 class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
@@ -392,9 +550,9 @@ if __name__ == '__main__':
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
-	# mqtt_client = mqtt.Client()
-	# mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-	# mqtt_client.connect(MQTT_ADDRESS, 1883)
+	mqtt_client = mqtt.Client()
+	mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+	mqtt_client.connect(MQTT_ADDRESS, 1883)
 
 	try:
 	# Mono connection : méthode of the server object to process one or many requests
