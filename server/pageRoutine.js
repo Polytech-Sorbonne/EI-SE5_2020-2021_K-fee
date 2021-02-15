@@ -256,4 +256,6 @@ function activeDimanche() {
         div.style.display = "none";
         hour.required = false;
     }
+
 }
+
