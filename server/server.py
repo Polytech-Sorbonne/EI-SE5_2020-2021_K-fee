@@ -37,15 +37,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("script.js","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-		
-		elif self.path == '/pageRoutine.js':
-			self.send_response(200)
-			self.send_header("Content-type", "text/js")
-			self.end_headers()
-			#ouverture en lecture
-			f = open("pageRoutine.js","r") #lecture
-			s = f.read()
-			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/pageRoutine.js':
 			self.send_response(200)
@@ -208,7 +199,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 
-		if self.path == '/test':
+		if self.path == '/pageChargAddRoutine.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargAddRoutine.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			#print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
@@ -235,7 +234,89 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 				id2 = self.mysql.selectRecetteID(dict['RecetteLundi'])
 				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+			#######	Mardi #######
+			if 'Mardi' in dict :
+				self.mysql.insertJour('Mardi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
 
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteMardi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Mercredi #######
+			if 'Mercredi' in dict :
+				self.mysql.insertJour('Mercredi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteMercredi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Jeudi #######
+			if 'Jeudi' in dict :
+				self.mysql.insertJour('Jeudi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteJeudi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Vendredi #######
+			if 'Vendredi' in dict :
+				self.mysql.insertJour('Vendredi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteVendredi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Samedi #######
+			if 'Samedi' in dict :
+				self.mysql.insertJour('Samedi')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteSamedi'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
+
+			#######	Samedi #######
+			if 'Dimanche' in dict :
+				self.mysql.insertJour('Dimanche')
+				id1 = self.mysql.selectRoutineID()
+				id2 = self.mysql.selectJourID()
+				self.mysql.insertPossede('Possede_RoutineJour',id1[0],id2[0])
+
+				self.mysql.insertHeure(dict['heureLundi'])
+				id1 = self.mysql.selectHeureID()
+				self.mysql.insertPossede('Possede_JourHeure',id2[0],id1[0])
+
+				id2 = self.mysql.selectRecetteID(dict['RecetteDimanche'])
+				self.mysql.insertPossede('Possede_HeureRecette',id1[0],id2[0])
 
 
 
