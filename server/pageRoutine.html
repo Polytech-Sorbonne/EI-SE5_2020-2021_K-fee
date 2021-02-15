@@ -31,7 +31,7 @@
 <div class="w3-container w3-padding-32">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
     <a href="#nouvelle" class="w3-bar-item w3-button" style =" width:50% ;"><b>Nouvelle </b>Routine</a>
-    <a href="#toutes" class="w3-bar-item w3-button" style =" width:50% ;"><b>Toutes </b>Routines</a>
+    <a href="#toutes" class="w3-bar-item w3-button" style =" width:50% ;"><b>Supprimer </b>Routine</a>
   </div>
 
 <!-- Nouvelle routine Section -->
@@ -40,13 +40,10 @@
     <p>Dans cette section vous pouvez selectionner le nom de votre nouvelle routine et les jours où vous souhaitez programmer un ou des cafés. </p>
 
 
-    <form action="test" method="post">
+    <form action="pageChargAddRoutine.html" method="post">
         <!-- Nom de la routine -->
         <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16">Nom de la Routine</h4>
         <p> Choisissez bien le nom de votre routine de façon à facilement vous souvenir de son contenu.</p>
-
-        <label for="pwd" > Nouveau nom :</label>
-        <input  class="form-control" placeholder="Entrez un texte" name="nom">
 
             <label for="pwd" > <i class="fa fa-fw fa-star"></i> Nouveau nom :</label>
             <input  id="nom_routine" class="form-control" placeholder="Entrez un texte" name="nom">
@@ -204,22 +201,22 @@
 
 <!-- Toutes les routines Section -->
     <div class="w3-container w3-padding-32" id="toutes">
-        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-search"></i>Toutes les routines</h3>
+        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-search"></i>Supprimer routine</h3>
 
         <p>Dans cette section vous pouvez voir nos routines enregistrées. </p>
-    
 
 
-      <form action="ShowRoutine" method="post">
 
-        <label for="cafe"> Choisissez une recette existante :</label>
+      <form action="pageChargSupRoutine.html" method="post">
+
+        <label for="cafe"> Choisissez une routine à supprimer :</label>
         <select name="ShowRoutine" id ="ShowRoutine" onchange="AfficheRoutine()" >
           <option value="">--Please choose an option--</option>
         </select>
 
         <div id = "resultRoutine"> </div>
 
-        <div id = "result2"> </div>
+        <div id = "result"> </div>
 
         <br><br>
         <input class="w3-button w3-black w3-section" type="submit" value="Valider">

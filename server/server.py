@@ -357,6 +357,22 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.mysql.deleteRecette(self.path,query)
 			self.end_headers()
 
+		elif self.path == '/pageChargSupRoutine.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargSupRoutine.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
+			print(res)
+			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
+			print(query)
+			self.mysql.deleteRoutine(self.path,query)
+			self.end_headers()
+
 		else:
 			res = urllib.parse.urlparse(self.path)
 			query = urllib.parse.parse_qs(res.query)
@@ -455,6 +471,67 @@ class MySQL():
 		val = ', '.join('"%s"' %v[0] for v in query.values())
 		print(val)
 		req = "DELETE FROM Recette where nom =  (%s)" %(val)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+	def deleteRoutine(self,path,query):
+		print(query)
+		val = ', '.join('"%s"' %v[0] for v in query.values())
+		print(val)
+		#Recupérer l'ID de la Routine à supprimer
+		idRoutine = "SELECT id FROM Routine where nom =  (%s)" %(val)
+		print(idRoutine)
+		idRoutine = self.c.execute(idRoutine).fetchall()
+		idRoutine = idRoutine[0][0]
+		print(idRoutine)
+
+		#Recupérer l'ID des Jours à supprimer
+		idJour = "SELECT idJour FROM Possede_RoutineJour where idRoutine =  (%s)" %(idRoutine)
+		print(idJour)
+		idJour = self.c.execute(idJour).fetchall()
+		idJour = idJour[:][0]
+		print(idJour)
+
+		#Recupérer l'ID des heures à supprimer
+		idHeure = "SELECT idHeure FROM Possede_JourHeure where idJour =  (%s)" %(idJour)
+		print(idHeure)
+		idHeure = self.c.execute(idHeure).fetchall()
+		idHeure = idHeure[0][0]
+		print(idHeure)
+
+		#Supprimer Possede_HeureRecette
+		req = "DELETE FROM Possede_HeureRecette where idHeure =  (%s)" %(idHeure)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Possede_JourHeure
+		req = "DELETE FROM Possede_JourHeure where idJour =  (%s)" %(idJour)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Heure
+		req = "DELETE FROM Heure where id =  (%s)" %(idHeure)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Possede_RoutineJour
+		req = "DELETE FROM Possede_RoutineJour where idRoutine =  (%s)" %(idRoutine)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer Jour
+		req = "DELETE FROM Jour where id =  (%s)" %(idJour)
+		print(req)
+		self.c.execute(req)
+		self.conn.commit()
+
+		#Supprimer la Routine
+		req = "DELETE FROM Routine where nom =  (%s)" %(val)
 		print(req)
 		self.c.execute(req)
 		self.conn.commit()

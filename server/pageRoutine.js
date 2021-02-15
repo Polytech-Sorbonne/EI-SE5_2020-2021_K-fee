@@ -33,11 +33,21 @@ $.ajax({
 function Routine(response) {
   var box = $('#result');
 
-  for (var i = 0; i < response["Routine"].length ; i++) {
 
-    var optionRoutine = '<option value=' + response["Routine"][i]['nom'] + '>' + response["Routine"][i]['nom']+ '</option>';
+  if( response["Routine"].length >= 2) {
+    for (var i = 0; i < response["Routine"].length ; i++) {
+
+      var optionRoutine = '<option value=' + response["Routine"][i]['nom'] + '>' + response["Routine"][i]['nom']+ '</option>';
+      document.getElementById("ShowRoutine").innerHTML += optionRoutine;
+    }
+
+  }
+  else {
+    var optionRoutine = '<option value=' + response.Routine['nom'] + '>' + response.Routine['nom']+ '</option>';
     document.getElementById("ShowRoutine").innerHTML += optionRoutine;
   }
+
+
 
   // for (var i = 0; i < response["Routine"].length ; i++) {
   //
@@ -258,4 +268,3 @@ function activeDimanche() {
     }
 
 }
-
