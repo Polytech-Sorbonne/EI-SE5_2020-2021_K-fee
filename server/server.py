@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import socketserver,_thread
 import json
 
-MQTT_ADDRESS = '192.168.118.226'
+MQTT_ADDRESS = '192.168.20.226'
 MQTT_USER = 'mickael'
 MQTT_PASSWORD = 'mickael'
 
@@ -172,9 +172,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.send_header("Content-type", "text/html")
 				self.end_headers()
 
-				###########################
-				####### A MODIFIER ########
-				###########################
 	def do_POST(self):
 		"""Respond to a POST request."""
 		print("POST " + self.path)
@@ -325,6 +322,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 
+
 		elif self.path == '/pageChargAddRecette.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -459,7 +457,6 @@ class MySQL():
 		self.conn.commit()
 
 	def insertPossede(self,path,id1,id2):
-
 		val = '%s,%s'%(id1[0],id2[0])
 		req = "insert into %s values (%s)" %(path, val)
 		print(req)
