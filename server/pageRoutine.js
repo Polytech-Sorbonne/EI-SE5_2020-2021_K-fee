@@ -133,8 +133,8 @@ function Recette(response) {
   }
 }
 
-function AfficheRecette() {
-  var selectElmt = document.getElementById("ajoutSelect");
+function AfficheRecetteLundi() {
+  var selectElmt = document.getElementById("ajoutRecetteLundi");
   var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
 
   for ( var v = 1 ; v < selectElmt.length; v++) {
@@ -154,6 +154,139 @@ function AfficheRecette() {
   }
 
 }
+function AfficheRecetteMardi() {
+  var selectElmt = document.getElementById("ajoutRecetteMardi");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+
+function AfficheRecetteMecredi() {
+  var selectElmt = document.getElementById("ajoutRecetteMercredi");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+function AfficheRecetteJeudi() {
+  var selectElmt = document.getElementById("ajoutRecettejeudi");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+function AfficheRecetteVendredi() {
+  var selectElmt = document.getElementById("ajoutRecetteVendredi");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+
+function AfficheRecetteSamedi() {
+  var selectElmt = document.getElementById("ajoutRecetteSamedi");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+
+function AfficheRecetteDimanche() {
+  var selectElmt = document.getElementById("ajoutRecetteDimanche");
+  var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+
+  for ( var v = 1 ; v < selectElmt.length; v++) {
+
+    var valeur = selectElmt.options[v].value;
+    var div = document.getElementById(valeur)
+
+
+    if ( valeur == valeurselectionnee) {
+      if (div.style.display == "none") {
+        div.style.display = "block";
+      }
+    }
+    else if  (div.style.display == "block") {
+      div.style.display = "none";
+    }
+  }
+
+}
+
+
+
+
 
 
 function activeLundi() {
