@@ -39,7 +39,7 @@
     <p>Dans cette section vous pouvez selectionner les paramètres de votre café pour le boire immédiatement. </p>
 
     <dd>
-      <form action="CafeInstantane" method="post">
+      <form action="http://localhost:8000/pageChargCafeInst.html" method="post">
         <label for="cafe"> <i class="fa fa-fw fa-star"></i> Nombre de dose de café:</label>
         <select name="cafe" id="nb_dose_cafe">
           <option value="1">1</option>
@@ -80,7 +80,7 @@
      <p>Dans cette section vous pouvez selectionner la recette devotre choix pour faire un café immédiatement. </p>
 
      <dd>
-     <form action="ajoutSelect" method="post">
+     <form action="http://localhost:8000/pageChargCafeInst.html" method="post">
       <label for="cafe"> <i class="fa fa-fw fa-star"></i> Choisissez une recette existante :</label>
       <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
         <option value="">--Please choose an option--</option>

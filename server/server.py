@@ -92,12 +92,30 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path == '/pageEtat.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageEtat.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 		elif self.path == '/pageChargSupRecette.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 			#ouverture en lecture
 			f = open("pageChargSupRecette.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+		
+		elif self.path == '/pageChargCafeInst.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargCafeInst.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
@@ -176,7 +194,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		"""Respond to a POST request."""
 		print("POST " + self.path)
 
-		if self.path == '/CafeInstantane':
+		if self.path == '/pageChargCafeInst.html':
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("pageChargCafeInst.html","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
@@ -372,9 +398,9 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 
 		else:
-			res = urllib.parse.urlparse(self.path)
-			query = urllib.parse.parse_qs(res.query)
-			rep = self.mysql.insert(res,query)
+			#res = urllib.parse.urlparse(self.path)
+			#query = urllib.parse.parse_qs(res.query)
+			#rep = self.mysql.insert(res,query)
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
