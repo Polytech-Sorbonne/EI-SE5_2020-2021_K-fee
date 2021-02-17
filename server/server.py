@@ -573,6 +573,7 @@ if __name__ == '__main__':
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
+
 	#mqtt_client = mqtt.Client()
 	#mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
 	#mqtt_client.connect(MQTT_ADDRESS, 1883)

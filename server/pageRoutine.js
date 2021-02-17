@@ -1,4 +1,3 @@
-
 $.ajax({
   url: '/GetRoutine',
   type: 'GET',
@@ -13,22 +12,6 @@ $.ajax({
 
 }
 });
-//
-// $.ajax({
-//   url: '/GetRecette',
-//   type: 'GET',
-//   dataType : 'JSON',
-//   success: function(response){
-//     Recette(response)
-//     console.log(response);
-//   },
-//   error: function(error){
-//     box.html("error");
-//     console.log(error);
-//
-// }
-// });
-//
 
 function Routine(response) {
   var box = $('#result');
@@ -116,58 +99,29 @@ function Recette(response) {
   }
 
 
-  for (var i = 0; i < response["Recette"].length ; i++) {
 
-      var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaine += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaine += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaine += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaine += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteLundi").innerHTML += chaine;
+  // for (var i = 0; i < response["Recette"].length ; i++) {
+  //
+  //     var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
+  //     chaine += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
+  //     chaine += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
+  //     chaine += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
+  //     chaine += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
+  //     document.getElementById("RecetteLundi").innerHTML += chaine;
+  //     // document.getElementByName("RecetteMardi").innerHTML += chaine;
+  //     // document.getElementById("RecetteMercredi").innerHTML += chaine;
+  //     // document.getElementById("RecetteJeudi").innerHTML += chaine;
+  //     // document.getElementById("RecetteVendredi").innerHTML += chaine;
+  //     // document.getElementById("RecetteSamedi").innerHTML += chaine;
+  //     // document.getElementById("RecetteDimanche").innerHTML += chaine;
+  // }
 
-      var chaineMa = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaineMa += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaineMa += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaineMa += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaineMa += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteMardi").innerHTML += chaineMa;
-
-      var chaineMe = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaineMe += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaineMe += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaineMe += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaineMe += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteMercredi").innerHTML += chaineMe;
-
-      var chaineJ = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaineJ += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaineJ += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaineJ += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaineJ += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteLundi").innerHTML += chaineJ;
-
-      var chaineV = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaineV += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaineV += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaineV += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaineV += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteLundi").innerHTML += chaineV;
-
-      var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
-      chaine += "<ul> <li> Nombre de dose de café : " + response["Recette"][i]['nb_dose_cafe']+ '</li>';
-      chaine += "<li>Nombre de sucre : " + response["Recette"][i]['nb_dose_sucre']+ '</li>';
-      chaine += "<li>Taille : " + response["Recette"][i]['taille']+ '</li>';
-      chaine += "<li>Température : " + response["Recette"][i]['temperature']+ '</li></ul></div>';
-      document.getElementById("RecetteLundi").innerHTML += chaine;
-      document.getElementById("RecetteJeudi").innerHTML += chaine;
-      document.getElementById("RecetteVendredi").innerHTML += chaine;
-      document.getElementById("RecetteSamedi").innerHTML += chaine;
-      document.getElementById("RecetteDimanche").innerHTML += chaine;
-  }
 }
 
-function AfficheRecetteLundi() {
-  var selectElmt = document.getElementById("ajoutRecetteLundi");
+
+
+function AfficheRecetteMardi() {
+  var selectElmt = document.getElementById("ajoutRecetteMardi");
   var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
 
   for ( var v = 1 ; v < selectElmt.length; v++) {
@@ -188,8 +142,9 @@ function AfficheRecetteLundi() {
 
 }
 
-function AfficheRecetteMardi() {
-  var selectElmt = document.getElementById("ajoutRecetteMardi");
+
+function AfficheRecetteLundi() {
+  var selectElmt = document.getElementById("ajoutRecetteLundi");
   var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
 
   for ( var v = 1 ; v < selectElmt.length; v++) {
