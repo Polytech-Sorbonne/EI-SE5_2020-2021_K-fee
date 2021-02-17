@@ -12,7 +12,7 @@ MQTT_USER = 'mickael'
 MQTT_PASSWORD = 'mickael'
 MQTT_TOPIC = 'Monitoring'
 mqtt_client = mqtt.Client()
-TassePresence = 1
+TassePresence = 0
 
 def on_message(client, userdata, msg):
 	print(msg.topic + ' ' + str(msg.payload))
