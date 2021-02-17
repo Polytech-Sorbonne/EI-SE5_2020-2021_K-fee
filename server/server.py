@@ -190,7 +190,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				else :
 					val += v[0]
 			#print(val)
-			mqtt_client.publish("home/kfee",val)
+			#mqtt_client.publish("home/kfee",val)
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -547,9 +547,9 @@ if __name__ == '__main__':
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
-	mqtt_client = mqtt.Client()
-	mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-	mqtt_client.connect(MQTT_ADDRESS, 1883)
+	# mqtt_client = mqtt.Client()
+	# mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+	# mqtt_client.connect(MQTT_ADDRESS, 1883)
 
 	try:
 	# Mono connection : méthode of the server object to process one or many requests

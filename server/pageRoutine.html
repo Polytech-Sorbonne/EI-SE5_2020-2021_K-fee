@@ -72,7 +72,6 @@
         </div>
         <br>
 
-        <!-- Creer Jour Mardi (si value de checkMardi = check)-->
         <input type="checkbox" name="Mardi" id="checkMardi" onclick="activeMardi()">
         <label for="pwd" > Mardi <br> </label>
         <div id="Mardi" style="display:none">
@@ -80,14 +79,14 @@
             <!-- Creer Heure Mardi (si value de checkMardi = check)-->
             <input type="time" id="heure_Mardi" name="heureMardi"
             min="00:00" max="23:59" >
-
             <br><br>
             <select name="RecetteMardi" id ="ajoutRecetteMardi" onchange="AfficheRecetteMardi()" >
               <option value="">--Please choose an option--</option>
             </select>
-            <div id = "RecetteMardi"> </div>
+            <div id = "RecetteMardi" name = "testMardi"> </div>
 
-            <div id = "result2"> </div>
+
+
         </div>
         <br>
 
@@ -107,7 +106,6 @@
             </select>
             <div id = "RecetteMercredi"> </div>
 
-            <div id = "result2"> </div>
         </div>
         <br>
 
@@ -194,7 +192,7 @@
         <br>
 
 
-        <input class="w3-button w3-black w3-section" type="submit" value="Valider">
+        <input class="w3-button w3-black w3-section" type="submit" value="Submit">
 
     </form>
     </div>
