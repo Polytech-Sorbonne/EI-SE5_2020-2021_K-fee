@@ -99,6 +99,7 @@ function Recette(response) {
   }
 
 
+
   // for (var i = 0; i < response["Recette"].length ; i++) {
   //
   //     var chaine = "<div id = "+response["Recette"][i]["nom"] + " style='display:none;'> " ;
@@ -114,6 +115,7 @@ function Recette(response) {
   //     // document.getElementById("RecetteSamedi").innerHTML += chaine;
   //     // document.getElementById("RecetteDimanche").innerHTML += chaine;
   // }
+
 }
 
 
@@ -139,6 +141,7 @@ function AfficheRecetteMardi() {
   }
 
 }
+
 
 function AfficheRecetteLundi() {
   var selectElmt = document.getElementById("ajoutRecetteLundi");
