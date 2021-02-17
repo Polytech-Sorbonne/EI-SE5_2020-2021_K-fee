@@ -4,11 +4,26 @@
 import http.server, urllib.parse, sqlite3, threading
 import paho.mqtt.client as mqtt
 import socketserver,_thread
+import time
 import json
 
 MQTT_ADDRESS = '192.168.20.226'
 MQTT_USER = 'mickael'
 MQTT_PASSWORD = 'mickael'
+MQTT_TOPIC = 'Monitoring'
+mqtt_client = mqtt.Client()
+TassePresence = 0
+
+def on_message(client, userdata, msg):
+	print(msg.topic + ' ' + str(msg.payload))
+	message = str(msg.payload)
+	#Présence de la tasse
+	if message[0] == '0' :
+		#il y a une tasse
+		if message[1] == '1' :
+			TassePresence = 1
+		else :
+			TassePresence = 0
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 	def __init__(self, *args, **kwargs):
@@ -46,6 +61,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageRoutine.js","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 
 		elif self.path == '/pageCafe.html':
 			self.send_response(200)
@@ -109,7 +125,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageChargSupRecette.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-		
+
 		elif self.path == '/pageChargCafeInst.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -117,8 +133,9 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			#ouverture en lecture
 			f = open("pageChargCafeInst.html","r") #lecture
 			s = f.read()
-			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-
+			# self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+			#mqtt_client.publish("home/kfee","Tasse")
+			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
 
 		elif self.path == '/GetRecette':
 			#ouverture en lecture
@@ -175,6 +192,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.send_header("Content-type", "text/html")
 				self.end_headers()
 
+
 		else :
 			res = urllib.parse.urlparse(self.path)
 			rep = self.mysql.select(res.path)
@@ -201,7 +219,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			#ouverture en lecture
 			f = open("pageChargCafeInst.html","r") #lecture
 			s = f.read()
-			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 
 			res = self.rfile.read(int(self.headers['content-length'])).decode(encoding="utf-8")
 			print(res)
@@ -216,13 +234,16 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				else :
 					val += v[0]
 			#print(val)
-			#mqtt_client.publish("home/kfee",val)
+			mqtt_client.publish("home/kfee",val)
+
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
 
-		if self.path == '/pageChargAddRoutine.html':
+		elif self.path == '/pageChargAddRoutine.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -349,6 +370,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 
 
+
 		elif self.path == '/pageChargAddRecette.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -423,7 +445,6 @@ class MySQL():
 		else:
 			req = "select %s from %s where id=%s" %(elem[3],elem[1],elem[2])
 		return self.c.execute(req).fetchall()
-
 
 	def selectRecette(self,path):
 		req = "SELECT JSON_OBJECT('id', id, 'nom', nom, 'nb_dose_cafe',nb_dose_cafe,'nb_dose_sucre',nb_dose_sucre,'taille',taille,'temperature',temperature) from RECETTE;"
@@ -560,6 +581,24 @@ class MySQL():
 		self.conn.commit()
 
 
+def on_connect(client, userdata, flags, rc):
+    """ The callback for when the client receives a CONNACK response from the server."""
+    print('Connected with result code ' + str(rc))
+    client.subscribe(MQTT_TOPIC)
+
+
+def init_mqtt(threadname):
+
+	mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+	mqtt_client.connect(MQTT_ADDRESS, 1883)
+	mqtt_client.on_message = on_message
+	mqtt_client.on_connect = on_connect
+
+	print("quelque chose")
+	mqtt_client.loop_forever()
+
+
+
 
 class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
 	pass
@@ -574,13 +613,12 @@ if __name__ == '__main__':
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
 
 
-	#mqtt_client = mqtt.Client()
-	#mqtt_client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-	#mqtt_client.connect(MQTT_ADDRESS, 1883)
-
 	try:
 	# Mono connection : méthode of the server object to process one or many requests
+		print("testet^pdomjlsbhgvdsjlk,DJH")
+		_thread.start_new_thread(init_mqtt,("thread1",))
 		httpd.serve_forever()
+
 	except KeyboardInterrupt:
 		pass
 	#close the socket
