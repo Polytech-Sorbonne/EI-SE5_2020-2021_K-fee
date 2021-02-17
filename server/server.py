@@ -71,6 +71,28 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
+		elif self.path.endswith("logo.png"):
+			mimetype='image/png'
+			#ouverture en lecture
+			f = open("logo.png","r") #lecture
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			with open("logo.png", 'rb') as f:
+				self.wfile.write(f.read())
+			
+		
+		elif self.path.endswith("logo-titre.png"):
+			mimetype='image/png'
+			#ouverture en lecture
+			f = open("logo-titre.png","r") #lecture
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			with open("logo-titre.png", 'rb') as f:
+				self.wfile.write(f.read())
+			
+
 		elif self.path == '/pageRoutine.js':
 			self.send_response(200)
 			self.send_header("Content-type", "text/js")
