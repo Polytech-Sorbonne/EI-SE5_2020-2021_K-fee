@@ -13,17 +13,35 @@ MQTT_PASSWORD = 'mickael'
 MQTT_TOPIC = 'Monitoring'
 mqtt_client = mqtt.Client()
 TassePresence = 0
+CapteurCafe = 0
+CapteurEau = 0
+CapteurSucre = 0
+
 
 def on_message(client, userdata, msg):
+	global TassePresence
 	print(msg.topic + ' ' + str(msg.payload))
 	message = str(msg.payload)
+	print("message : " + message)
 	#Présence de la tasse
-	if message[0] == '0' :
+	if message[2] == '0' :
 		#il y a une tasse
-		if message[1] == '1' :
+		if message[3] == '1' :
+			print("oui")
 			TassePresence = 1
+			print(TassePresence)
 		else :
+			print("non")
 			TassePresence = 0
+			print(TassePresence)
+	#Capteur Café
+	elif message[2] == '1' :
+		CapteurCafe = message[3:]
+	elif message[2] == '2' :
+		CapteurEau = message[3:]
+	elif message[2] == '3' :
+		CapteurSucre = message[3:]
+
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 	def __init__(self, *args, **kwargs):
@@ -149,6 +167,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/pageChargCafeInst.html':
+			global TassePresence
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -157,6 +176,8 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			s = f.read()
 			# self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 			#mqtt_client.publish("home/kfee","Tasse")
+			time.sleep(2)
+			print("Envoie : " + str(TassePresence))
 			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
 
 		elif self.path == '/GetRecette':
@@ -255,7 +276,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 					val += "1"
 				else :
 					val += v[0]
-			#print(val)
+			print(val)
 			mqtt_client.publish("home/kfee",val)
 
 
@@ -630,14 +651,15 @@ def serve_on_port(port):
 	server.serve_forever()
 
 if __name__ == '__main__':
+
 	# Mono connection
 	server_class = http.server.HTTPServer
 	httpd = server_class(("0.0.0.0", 8000), MyHandler)
-
+	print("main:")
+	print(TassePresence)
 
 	try:
 	# Mono connection : méthode of the server object to process one or many requests
-		print("testet^pdomjlsbhgvdsjlk,DJH")
 		_thread.start_new_thread(init_mqtt,("thread1",))
 		httpd.serve_forever()
 
