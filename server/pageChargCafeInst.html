@@ -6,14 +6,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+  function afficherPopUp(){
+    $.ajax({
+        url: '/pageChargCafeInst.html',
+        type: 'GET',
+        dataType : 'text',
+        success: function(response){
+          popUp(response);
+
+        },
+        error: function(error){
+          box.html("error");
+          console.log(error);
+
+      }
+
+      });
+  }
+
+  function popUp(response) {
+
+    console.log(response);
+    if (response == 0) {
+      alert("Attention votre café ne peut pas être lancé !\n Veuillez ajouter une tasse dans votre machine.");
+
+    }
+  }
+  </script>
+
 </head>
 
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
-  <img class="w3-image" src="https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/1/0/110511/le-cafe-modifie-gout-des-aliments.jpg?alias=original" width="1500" height="800"></img>
+  <img  class="w3-image" src="https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/1/0/110511/le-cafe-modifie-gout-des-aliments.jpg?alias=original" width="1500" height="800"></img>
   <div class="w3-display-middle w3-margin-top w3-center">
     <h1 class="w3-xxlarge w3-text-dark"><i class="fa fa-fw fa-arrow-circle-right"></i><span class="w3-padding w3-black w3-opacity-min"><b>Votre café est en cours de réalisation</b></span> <br> <br> <span class="w3-padding w3-white w3-opacity-min">Bonne dégustation !</span> <br> . . . <i class="fa fa-fw fa-coffee"></i> . . .</h1>
   </div>
 </header>
+
+<body onload="afficherPopUp()">
+
+
 
 <div class="w3-top">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
@@ -24,3 +59,9 @@
     </div>
   </div>
 </div>
+
+
+</body>
+
+</html>
+</head>
