@@ -39,6 +39,8 @@ def on_message(client, userdata, msg):
 			TassePresence = 0
 			print(TassePresence)
 	#Capteur Café
+
+	#Capteur Café
 	elif message[2] == '1' :
 		CapteurCafe = message[3:]
 		print(CapteurCafe)
@@ -128,15 +130,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			#ouverture en lecture
 			f = open("pageCafe.html","r") #lecture
-			s = f.read()
-			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
-
-		elif self.path == '/pageHist.html':
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
-			self.end_headers()
-			#ouverture en lecture
-			f = open("pageHist.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
@@ -256,7 +249,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.end_headers()
 
 		elif self.path == '/GetEtat':
-			TassePresence = 0
+			TassePresence = 1
 			CapteurCafe = 53
 			CapteurEau = 15
 			CapteurSucre = 60
@@ -266,7 +259,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			# global CapteurEau
 			# global CapteurSucre
 			#Requete pour recevoir les données du capteurs
-			#mqtt_client.publish("home/kfee","D")
+			#mqtt_client.publish("home/kfee","2")
 			#time.sleep(2)
 			#Envoie des Données des capteurs
 			res = '{ "Cafe":' + str(CapteurCafe) + ','
@@ -316,23 +309,49 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
-			val ='1'
-			for v in query.values() :
-				if v[0] == "Grand" :
-					val += '2'
-				elif v[0] == "Petit" :
-					val += "1"
-				else :
-					val += v[0]
-			print(val)
-			mqtt_client.publish("home/kfee",val)
+			
+			if len(query) != 1 :
+				val ='1'
+				for v in query.values() :
+					if v[0] == "Grand" :
+						val += '2'
+					elif v[0] == "Petit" :
+						val += "1"
+					else :
+						val += v[0]
+				print(val)
+			else  :
+				#café
+				nom = query['Recette']
+				dose_cafe = self.mysql.selectCafeInst("nb_dose_cafe",nom[0])
+				dose_cafe = dose_cafe[0][0]
 
+				#Sucre
+				nom = query['Recette']
+				dose_sucre = self.mysql.selectCafeInst("nb_dose_sucre",nom[0])
+				dose_sucre = dose_sucre[0][0]
+
+				#Taille
+				nom = query['Recette']
+				taille = self.mysql.selectCafeInst("taille",nom[0])
+				taille = taille[0][0]
+
+				if taille == "Grand" :
+					taille = '2'
+				elif taille == "Petit" :
+					taille = "1"
+
+				val = '1' + str(dose_cafe) +str(dose_sucre) + str(taille)
+				print(val)
+
+			mqtt_client.publish("home/kfee",val)
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
+
 
 
 
@@ -563,6 +582,11 @@ class MySQL():
 		req = "select id from Recette where nom='%s'" %(nom[0])
 		return self.c.execute(req).fetchall()
 
+	def selectCafeInst(self,var,nom):
+
+		req = "select %s from Recette where nom='%s'" %(var ,nom)
+		print(req)
+		return self.c.execute(req).fetchall()
 
 	def insert(self,path,query):
 		print(query)
