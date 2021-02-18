@@ -63,6 +63,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 	def do_GET(self):
 		"""Respond to a GET request."""
 		print("GET" + self.path)
+		global TassePresence
 		if self.path == '/favicon.ico':
 			return
 
@@ -179,7 +180,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
 		elif self.path == '/pageChargCafeInst.html':
-			global TassePresence
+
 
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -249,23 +250,26 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.end_headers()
 
 		elif self.path == '/GetEtat':
-			TassePresence = 1
-			CapteurCafe = 53
-			CapteurEau = 15
-			CapteurSucre = 60
-
-			# global TassePresence
 			# global CapteurCafe
 			# global CapteurEau
 			# global CapteurSucre
 			#Requete pour recevoir les données du capteurs
-			#mqtt_client.publish("home/kfee","2")
-			#time.sleep(2)
+
+			# TassePresence = 1
+			CapteurCafe = 66
+			CapteurEau = 30
+			CapteurSucre = 47
+
+
+			mqtt_client.publish("home/kfee","2")
+			time.sleep(2)
 			#Envoie des Données des capteurs
 			res = '{ "Cafe":' + str(CapteurCafe) + ','
 			res += ' "Eau":' + str(CapteurEau) + ','
 			res += ' "Sucre":' + str(CapteurSucre) + ','
 			res += ' "Tasse":' + str(TassePresence) + '}'
+
+
 
 			if len(res) > 0 :
 				self.send_response(200)
@@ -309,7 +313,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			print(res)
 			query = urllib.parse.parse_qs(res,keep_blank_values=1,encoding='utf-8')
 			print(query)
-			
+
 			if len(query) != 1 :
 				val ='1'
 				for v in query.values() :
@@ -351,6 +355,8 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
+
+
 
 
 
