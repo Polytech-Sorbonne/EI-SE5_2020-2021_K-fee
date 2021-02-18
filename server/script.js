@@ -16,6 +16,9 @@ $.ajax({
 
 
 
+
+
+
 function Recette(response) {
   //var box = $('#result');
 

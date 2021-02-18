@@ -20,6 +20,10 @@ CapteurSucre = 0
 
 def on_message(client, userdata, msg):
 	global TassePresence
+	global CapteurCafe
+	global CapteurEau
+	global CapteurSucre
+
 	print(msg.topic + ' ' + str(msg.payload))
 	message = str(msg.payload)
 	print("message : " + message)
@@ -37,10 +41,16 @@ def on_message(client, userdata, msg):
 	#Capteur Café
 	elif message[2] == '1' :
 		CapteurCafe = message[3:]
+		print(CapteurCafe)
+	#Capteur EAU
 	elif message[2] == '2' :
 		CapteurEau = message[3:]
+		print(CapteurEau)
+	#Capteur sucre
 	elif message[2] == '3' :
 		CapteurSucre = message[3:]
+		print(CapteurSucre)
+
 
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
@@ -53,6 +63,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 		print("GET" + self.path)
 		if self.path == '/favicon.ico':
 			return
+
 		if self.path == '/' or self.path == '/pageAccueil.html':
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
@@ -61,6 +72,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			f = open("pageAccueil.html","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
 
 		elif self.path == '/script.js':
 			self.send_response(200)
@@ -80,8 +92,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			with open("logo.png", 'rb') as f:
 				self.wfile.write(f.read())
-			
-		
+
 		elif self.path.endswith("logo-titre.png"):
 			mimetype='image/png'
 			#ouverture en lecture
@@ -91,7 +102,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			with open("logo-titre.png", 'rb') as f:
 				self.wfile.write(f.read())
-			
 
 		elif self.path == '/pageRoutine.js':
 			self.send_response(200)
@@ -99,6 +109,15 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			#ouverture en lecture
 			f = open("pageRoutine.js","r") #lecture
+			s = f.read()
+			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
+
+		elif self.path == '/script_etat.js':
+			self.send_response(200)
+			self.send_header("Content-type", "text/js")
+			self.end_headers()
+			#ouverture en lecture
+			f = open("script_etat.js","r") #lecture
 			s = f.read()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 
@@ -168,6 +187,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
 		elif self.path == '/pageChargCafeInst.html':
 			global TassePresence
+
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
@@ -235,6 +255,34 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 				self.send_header("Content-type", "text/html")
 				self.end_headers()
 
+		elif self.path == '/GetEtat':
+			TassePresence = 0
+			CapteurCafe = 53
+			CapteurEau = 15
+			CapteurSucre = 60
+
+			# global TassePresence
+			# global CapteurCafe
+			# global CapteurEau
+			# global CapteurSucre
+			#Requete pour recevoir les données du capteurs
+			#mqtt_client.publish("home/kfee","D")
+			#time.sleep(2)
+			#Envoie des Données des capteurs
+			res = '{ "Cafe":' + str(CapteurCafe) + ','
+			res += ' "Eau":' + str(CapteurEau) + ','
+			res += ' "Sucre":' + str(CapteurSucre) + ','
+			res += ' "Tasse":' + str(TassePresence) + '}'
+
+			if len(res) > 0 :
+				self.send_response(200)
+				self.send_header("Content-type", "text/json")
+				self.end_headers()
+				self.wfile.write(bytes(str(res)+'\n', 'UTF-8'))
+			else:
+				self.send_response(404)
+				self.send_header("Content-type", "text/html")
+				self.end_headers()
 
 		else :
 			res = urllib.parse.urlparse(self.path)
@@ -285,6 +333,8 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(bytes(str(s)+'\n', 'UTF-8'))
 			self.wfile.write(bytes(str(TassePresence)+'\n', 'UTF-8'))
+
+
 
 		elif self.path == '/pageChargAddRoutine.html':
 			self.send_response(200)
@@ -411,8 +461,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 			self.send_response(200)
 			self.send_header("Content-type", "text/html")
 			self.end_headers()
-
-
 
 		elif self.path == '/pageChargAddRecette.html':
 			self.send_response(200)

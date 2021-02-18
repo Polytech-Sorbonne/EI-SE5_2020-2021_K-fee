@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script_etat.js"></script>
 </head>
 
 <!-- Header -->
@@ -18,6 +18,7 @@
   <div class="w3-display-middle w3-margin-top w3-center">
     <h1 class="w3-xxlarge w3-text-dark"> <span class="w3-padding w3-black w3-opacity-min">Etat des capteurs</span></h1>
 </header>
+
 
 <div class="w3-top">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
@@ -28,52 +29,68 @@
 
 <body>
 
+
+
 <div class="w3-container w3-padding-32" id="add">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-    <a href="#Eau" class="w3-bar-item w3-button" style =" width:50% ;"><b>Niveau </b>Eau</a>
-    <a href="#Reservoir" class="w3-bar-item w3-button" style =" width:50% ;"><b>Niveau </b>Réservoir</a>
+    <a href="#Eau" class="w3-bar-item w3-button" style =" width:33% ;"><b>Niveau </b>Eau</a>
+    <a href="#Reservoir" class="w3-bar-item w3-button" style =" width:33% ;"><b>Niveau </b>Réservoir</a>
+    <a href="#PresenceTasse" class="w3-bar-item w3-button" style =" width:33% ;"><b>Présence </b>Tasse</a>
+
   </div>
 
+  <div  class =" w3-center">
+      <br><br>
+    <button onclick = "window.location.reload(false)" style="font-size:20px" class = "w3-button w3-black w3-section"> Refresh <i class="fa fa-refresh"></i> </button>
+  </div>
 <!-- Niveau EAU -->
   <div class="w3-container w3-padding-32" id="Eau">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-coffee"></i>Niveau de l'eau</h3>
     <p>Dans cette section vous pouvez controler le niveau de l'eau pour savoir s'il faut en ajouter. </p>
 
     <dd>
-      <form action="http://localhost:8000/pageChargCafeInst.html" method="post">
-        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Niveau actuel de l'eau :</label>
-        <select name="eau" id="niveau_eau">
-          <option value="1dL">1</option>
-          <option value="2dL">2</option>
-          <option value="3dL">3</option>
-          <option value="4dL">4</option>
-        </select>
+        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Niveau actuel de l'Eau :</label>
         <br><br>
+        <div id = "jaugeEau"> </div>
 
-        <input class="w3-button w3-black w3-section" type="submit" value="Valider">
-      </form>
     </dd>
 
   </div>
 
 
   <!-- Niveau RESERVOIR -->
-   <div class="w3-container w3-padding-32" id="CafeRecette">
+   <div class="w3-container w3-padding-32" id="Reservoir">
      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i class="fa fa-fw fa-book"></i>Niveau des réservoir </h3>
      <p>Dans cette section vous pouvez consulter le niveau des reservoirs de café et de sucre. </p>
 
      <dd>
-      <form action="http://localhost:8000/pageChargCafeInst.html" method="post">
-        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Niveau actuel d'eau :</label>
-        <select name="Recette" id ="ajoutSelect" onchange="AfficheRecette()" >
-          <option value="">--Please choose an option--</option>
-        </select>
-
+       <!-- Café -->
+        <label for="cafe"> <i class="fa fa-fw fa-star"></i> Niveau actuel de Café :</label>
+        <br><br>
+        <div id = "jaugeCafe">
+        </div>
         <br>
-        <input class="w3-button w3-black w3-section" type="submit" value="Valider">
-      </form>
+        <!-- Sucre -->
+        <label for="sucre"> <i class="fa fa-fw fa-star"></i> Niveau actuel de Sucre :</label>
+        <br><br>
+        <div id = "jaugeSucre">
+        </div>
      </dd>
    </div>
+
+   <!-- tasse Présence -->
+    <div class="w3-container w3-padding-32" id="PresenceTasse">
+      <span id = "smiley"> </span>
+      <p>Dans cette section vous pouvez consulter si il y a une tasse actuellement. </p>
+      <dd>
+        <!-- Café -->
+         <label for="cafe"> <i class="fa fa-fw fa-star"></i> Présence de la Tasse :</label>
+         <br><br>
+         <div id = "tasse">
+         </div>
+
+      </dd>
+    </div>
 
 </div>
 </body>
