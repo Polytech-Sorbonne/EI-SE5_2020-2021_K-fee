@@ -1,6 +1,10 @@
 
 #include <Water_level_sensor.h>
 
+unsigned char low_data[8] = {0};
+unsigned char high_data[12] = {0};
+ 
+
 void getHigh12SectionValue(void)
 {
   memset(high_data, 0, sizeof(high_data));
@@ -95,11 +99,11 @@ void check()
       trig_section++;
       touch_val >>= 1;
     }
-    SERIAL.print("water level = ");
-    SERIAL.print(trig_section * 5);
-    SERIAL.println("% ");
-    SERIAL.println(" ");
-    SERIAL.println("*********************************************************");
+    Serial.print("water level = ");
+    Serial.print(trig_section * 5);
+    Serial.println("% ");
+    Serial.println(" ");
+    Serial.println("*********************************************************");
     delay(1000);
   }
 }
@@ -119,8 +123,8 @@ uint8_t get_water_level(){
     // Serial.println("low 8 sections value = ");
     for (int i = 0; i < 8; i++)
     {
-      Serial.print(low_data[i]);
-      Serial.print(".");
+      // Serial.print(low_data[i]);
+      // Serial.print(".");
       if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
       {
         low_count++;
@@ -136,8 +140,8 @@ uint8_t get_water_level(){
     // Serial.println("high 12 sections value = ");
     for (int i = 0; i < 12; i++)
     {
-      Serial.print(high_data[i]);
-      Serial.print(".");
+      // Serial.print(high_data[i]);
+      // Serial.print(".");
  
       if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
       {
@@ -150,8 +154,8 @@ uint8_t get_water_level(){
       }
     }
  
-    Serial.println("  ");
-    Serial.println("  ");
+    // Serial.println("  ");
+    // Serial.println("  ");
  
     for (int i = 0 ; i < 8; i++) {
       if (low_data[i] > THRESHOLD) {
@@ -170,11 +174,16 @@ uint8_t get_water_level(){
       trig_section++;
       touch_val >>= 1;
     }
-    // SERIAL.print("water level = ");
-    // SERIAL.print(trig_section * 5);
-    // SERIAL.println("% ");
-    // SERIAL.println(" ");
-    // SERIAL.println("*********************************************************");
-    delay(1000);
-    return trig_section;
+    // Serial.print("water level = ");
+    // Serial.print(trig_section * 5);
+    // Serial.println("% ");
+    // Serial.println(" ");
+    // Serial.println("*********************************************************");
+    // delay(1000);
+    return trig_section * 5;
+}
+
+void setup_water_level(){
+  Serial.begin(115200);
+  Wire.begin();
 }

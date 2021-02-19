@@ -1,9 +1,9 @@
 
 #include "client_MQTT.h"
 
-const char* ssid = "S20+";
-const char* password = "12345678abc";
-const char* mqtt_server = "192.168.46.198";
+char ssid[] = "S20+";
+char password[] = "12345678abc";
+const char* mqtt_server = "192.168.118.226";
 
 const char* mqtt_username = "mickael"; // MQTT username
 const char* mqtt_password = "mickael"; // MQTT password
@@ -11,35 +11,42 @@ const char* mqtt_password = "mickael"; // MQTT password
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-void setup_wifi() {
 
-  delay(10);
-  // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+void setup_wifi(){
+    delay(10);
+    // We start by connecting to a WiFi network
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
 
-  WiFi.begin(ssid, password);
+    WiFi.begin(ssid,password);
 
-  while (WiFi.status() != WL_CONNECTED) {
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
     delay(500);
-    Serial.print(".");
-  }
-
-  randomSeed(micros());
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    delay(500);
+    Serial.println(WiFi.localIP());
+    delay(500);
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
+void setup_pub_sub() {
+Serial.begin(115200);
+setup_wifi();
+client.setServer(mqtt_server, 1883);
+client.setCallback(callback);
+randomSeed(analogRead(0));
+}
+
+void callback(char* topic, uint8_t* payload, unsigned int length) {
   Serial.print("\nMessage arrived [");
   Serial.print(topic);
   Serial.print("] ");
   char dose[length];
-  char monitoring[60];
 
   for (unsigned int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
@@ -52,71 +59,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Preparation cafe \n");
 
     Serial.print("Dose de cafe : ");
+    k.putCoffee(dose[1]);
     
-    if(dose[1] == '1'){
-      Serial.print("1 rotation dose cafe");
-    }
-    else if(dose[1] == '2'){
-      Serial.print("2 rotation dose cafe");
-    }
-    else if(dose[1] == '3'){
-      Serial.print("3 rotation dose cafe");
-    }
-    else if(dose[1] == '4'){
-      Serial.print("4 rotation dose cafe");
-    }
-
     Serial.print("\nDose de sucre : ");
-    
-    if(dose[2] == '1'){
-      Serial.print("1 rotation dose sucre");
-    }
-    else if(dose[2] == '2'){
-      Serial.print("2 rotation dose sucre");
-    }
-    else if(dose[2] == '3'){
-      Serial.print("3 rotation dose sucre");
-    }
-    else if(dose[2] == '4'){
-      Serial.print("4 rotation dose sucre");
-    }
-
-
-    Serial.print("\nTaille Cafe : \n");
-    Serial.print(dose[3]);
-    if(dose[3] == '1'){
-      Serial.print("Eau chaude en cours  \n");
-      delay(TEMPS_ATTENTE);
-      digitalWrite(16, HIGH);
-      delay(TEMPS_CAFE_PETIT);
-      digitalWrite(16, LOW);
-      Serial.print("Fin eau chaude\n");
-    }
-
+    k.putSugar(dose[2]);
+   
+    Serial.print("\nTaille Cafe : ");
+    k.putWater(dose[3]);
+  }
   else{
     Serial.print("preparation inconnu\n");
   }
-
-  float rand_cafe_qtt = random(100);
-  float rand_the_qtt = random(100);
-  float rand_chocolat_qtt = random(100);
-  float rand_sucre_qtt = random(100);
-
-  sprintf(monitoring,"Reservoirs : cafe : %.0f%% ",rand_cafe_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : the : %.0f%% ",rand_the_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : chocolat : %.0f%% ",rand_chocolat_qtt);
-  client.publish("Monitoring", monitoring);
-
-  sprintf(monitoring,"Reservoirs : sucre : %.0f%% ",rand_sucre_qtt);
-  client.publish("Monitoring", monitoring);
+  monitoring();
 }
-
-}
-
 
 void reconnect() {
   // Loop until we're reconnected
@@ -143,13 +98,25 @@ void reconnect() {
   }
 }
 
-void setup_pub_sub() {
-  pinMode(16, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  Serial.begin(115200);
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
-  randomSeed(analogRead(0));
+void monitoring(){
+  Serial.print("Debut monitoring\n");
+  char monitoring[60];
+
+  int qtt_cafe = k.getCoffeeQuantity();
+  int qtt_sucre = k.getSugarQuantity();
+  int water_level = k.getWaterLevelPercent();
+
+  sprintf(monitoring,"Reservoirs : cafe : %d%%\n",qtt_cafe);
+  Serial.print(monitoring);
+  client.publish("Monitoring", monitoring);
+
+  sprintf(monitoring,"Reservoirs : sucre : %d%%\n",qtt_sucre);
+  Serial.print(monitoring);
+  client.publish("Monitoring", monitoring);
+
+  sprintf(monitoring,"Reservoirs : eau : %d%%\n",water_level);
+  Serial.print(monitoring);
+  client.publish("Monitoring", monitoring);
 }
 
 void loop_pub_sub() {
@@ -157,5 +124,6 @@ void loop_pub_sub() {
   if (!client.connected()) {
     reconnect();
   }
+  monitoring();
   client.loop();
 }
