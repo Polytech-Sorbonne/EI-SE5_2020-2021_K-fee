@@ -1,6 +1,4 @@
 
-#include "client_MQTT.h"
-
 char ssid[] = "S20+";
 char password[] = "12345678abc";
 const char* mqtt_server = "192.168.118.226";

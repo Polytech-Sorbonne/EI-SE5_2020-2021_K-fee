@@ -2,10 +2,10 @@
 #ifndef CLIENT_MQTT_H
 #define CLIENT_MQTT_H
 
+#include <Arduino.h>
+#include <Kfee.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <Arduino.h>
-
 // Update these with values suitable for your network.
 
 // Temps reel 
@@ -28,5 +28,7 @@ void setup_pub_sub();
 
 //Lance la boucle infini 
 void loop_pub_sub();
+
+void monitoring();
 
 #endif
